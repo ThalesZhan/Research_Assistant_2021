@@ -1,0 +1,2397 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{Mydef}
+%\usepackage{titlesec}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[style=alphabetic,backend=bibtex,sorting=nyt,maxnames=99,maxcitenames=4]{biblatex}
+\addbibresource{reference.bib}
+
+\newcommand{\sectionbreak}{\clearpage}
+\title{Symplectic Structure, Geometric Invariant Theory \\and Scaling Problem}
+\author{Zhan Zhiyuan}
+\date{}
+
+\begin{document}
+	\maketitle
+	\tableofcontents
+
+\sectionbreak
+	\section{Introduction}
+	Considering a complex reductive Lie group $G = K_{\C}$ acting linearly on a finite-dimensional complex vector space $V$ equipped with a $K$-invariant inner product, there is a canonical symplectic structure on $V$ such that the induced action of $K$ on $V$ is Hamiltonian. 
+
+	Moreover, by the symplectic reduction \cite{key3}, the projective space $\Pb(V)$ can be equipped with a canonical symplectic form $\omega_{FS}$, called the \emph{Fubini-Study form}. $G$ acting on $V$ induces $G$ acting on $\Pb(V)$ and the action of $K$ on $\Pb(V)$ is also a Hamiltonian action with the moment map $\mu \colon \Pb(V) \sto \mathfrak{k}^*$. The image of $\mu$ has some convexity properties. If $K$ is commutative, then by the Atiyah–Guillemin–Sternberg convexity theorem \cite{key4,key5}, $\Img\mu$ is a convex polytope in $\mathfrak{k}^*$. For the noncommutative case, by Guillemin and Sternberg \cite{key6},
+	\begin{equation*}
+		\mathcal{P}_v = \mu(\clo{G\cdot [v]}) \cap \mathfrak{t}_{+}^*
+	\end{equation*}
+	is a convex polytope, called the \emph{moment polytope}, where $\mathfrak{t} = \Lie(T)$ for a maximal torus $T$ in $K$ and $\mathfrak{t}_{+}^* \subset \mathfrak{t}^*$ is a closed positive Weyl chamber.
+
+	In the invariant theory, it is important to determine if $0 \in \clo{G\cdot v}$ when giving a $v \in V$ because $0 \in \clo{G\cdot v}$ if and only if all invariant polynomials cannot separate $v$ and $0$. If $0 \in \clo{G\cdot v}$, then $v$ is called in the null cone. By the Hilbert-Mumford criterion \cite{key7}, $v$ is in the null cone if and only if there is a one-parameter subgroup $\lambda \colon \C^{*} \sto G$ s.t. 
+	\begin{equation*}
+		\lim_{t \sto 0} \lambda(t) \cdot v = 0
+	\end{equation*}
+	When considering the symplectic structure on $V$ and $\Pb(V)$ and $G$ acting on $V$ and $\Pb(V)$, by the Kempf-Ness theorem \cite{key8}, there is a dual statement of Hilbert-Mumford criterion. For $v \in V \backslash \bb{0}$ and let $x = [v] \in \Pb(V)$,
+	\begin{equation*}
+		0 \notin \clo{G \cdot v} ~\Leftrightarrow~ \clo{G \cdot x} \cap \mu^{-1}(0) \neq \varnothing
+	\end{equation*}
+	and such $x$ in $\Pb(V)$ is called $\mu$-semistable i.e. there exists a $y \in \clo{G \cdot x}$ s.t. $\mu(y) = 0$. Moreover, for the Hamiltonian action $K \curvearrowright \Pb(V)$ and $x \in \Pb(V)$, there is a Kempf-Ness function $\Phi_x \colon G/K \sto \R$ that has many nice properties. For example, when equipping $G/K$ with a canonical Riemannian metric, $\Phi_x$ is geodesically convex. And $x$ is $\mu$-semistable if and only if $\Phi_x$ is bounded below. \cite{key9} applied the properties of $\Phi_x$ to get an equivalent definition of the moment map and then to obtain two algorithms to solve this problem.
+
+	The \emph{Scaling problem} is considering $G \curvearrowright V$ and $G \curvearrowright \Pb(V)$ with the moment map $\mu$ and $v \in V$, determine if there is a $w \in \clo{G\cdot v}$ s.t. $\mu(w) = 0$ ($\mu$ can be lifted on $V$ by its definition). For example, if $G = ST(n) \times ST(n)$ acts $V = M(n,\C)$ by
+	\begin{equation*}
+		(A,B) \cdot X \defeq AXB
+	\end{equation*}
+	where $ST(n)$ is the set of $n\times n$ diagonal matrices with determinant $1$, then the scaling problem is equivalent to the doubly stochastic scaling problem for matrices. 
+
+	If $G = SL(n,\C) \times SL(n,\C)$ acts $V = M(n,\C)^{\oplus m}$ by
+	\begin{equation*}
+		(A,B) \cdot (X_1,\cdots,X_m) \defeq (AX_1B,\cdots,AX_mB)
+	\end{equation*}
+	then the scaling problem is corresponding to the operator scaling problem.
+
+	%If $G = SL{(n_1,\C)} \times \cdots \times SL{(n_d,\C)}$ acts $V = \C^{n_1}\otimes \cdots \otimes \C^{n_d}$ by
+	%\begin{equation*}
+	%	(A_1,\cdots,A_d) \cdot u_1\otimes \cdots \otimes u_d \defeq A_1u_1\otimes \cdots \otimes A_du_d
+	%\end{equation*}
+	%then the scaling problem is also tensor scaling problem talked in \cite{key10}.
+
+	\sectionbreak
+	\section{Lie Groups and Representations}
+
+	\subsection{Lie groups and Lie Algebras}
+
+	\begin{defn}
+		\begin{enumerate}
+			\item $G$ is a Lie group if it is a group and a smooth manifold such that the following maps are smooth
+			\begin{center}
+				\begin{tabular}{ccccccc}
+					$G \times G$ & $\rightarrow$ & $G$,&~& $G$ & $\rightarrow$ & $G$\\
+					$(g,h)$ & $\mapsto$ & $gh$ & ~&$g$& $\mapsto$ & $g^{-1}$
+				\end{tabular}
+			\end{center}
+			\item $H \subset G$ is a Lie subgroup if $H$ is a subgroup with smooth structure s.t. the inclusion map $i \colon H \hookrightarrow G$ is an immersion.
+		\end{enumerate}
+	\end{defn}
+	\begin{rem}
+		For $H \subset G$ is a subgroup, then $H$ is closed if and only if $H$ is a (regular) submanifold of $G$. So any closed subgroup is a Lie subgroup.
+	\end{rem}
+	\begin{thm}
+		Let $G$ be a connected commutative group. Then there is a Lie group isomorphism
+		\begin{equation*}
+			G \simeq \T^m \times \R^n
+		\end{equation*}
+		where $\T^m = S^1 \times \cdots \times S^1$ is an $m$-torus.
+	\end{thm}
+	\begin{cor}
+		Any connected commutative compact group $G \simeq \T^m$ for some $m \in \N$.
+	\end{cor}
+	Let $X \in \alg{g} \defeq T_eG$. Define the left-invariant vector field $v_{X} \in \V(G)$ as
+	\begin{equation*}
+		v_{X}(g) \defeq T_el_gX \in T_gG
+	\end{equation*}
+	where $l_g \colon G \sto G$ as $l_g(h) = gh$. Then for any $X$, since $v_{X}$ is left-invariant, there is a unique complete integral curve $\alpha_{X} \colon \R \sto G$ of $v_{X}$ through $e$. Therefore, define the exponential map $\exp \colon \alg{g} \sto G$ as $\exp(X) \defeq \alpha_{X}(1)$.
+	\begin{prop}
+		\begin{enumerate}
+			\item $\exp$ is locally diffeomorphic at $0$.
+			\item $\alpha_{X}(t) = \exp(tX)$ for any $X \in \alg{g}$.
+			\item $t \mapsto \exp tX$ is one-parameter group of $G$ for $X\in \alg{g}$. Converserly, any one-parameter subgroup $\alpha(t)$ has the form $\alpha(t) = \exp(tX)$ for some $X \in \alg{g}$.
+			\item If $\varphi \colon G \sto H$ is a Lie group homomorphism, then the diagram is commutative
+			\begin{center}
+				\begin{tikzcd}
+					G \arrow[r, "\varphi"]
+						& H \\
+					\alg{g} \arrow[ur, phantom, "\scalebox{1.5}{$\circlearrowleft$}" description] \arrow[u, "\exp"] \arrow[r, "T_e\varphi" below] & \alg{h} \arrow[u, "\exp" right]
+				\end{tikzcd}
+				~~ $\varphi \circ \exp = \exp \circ T_e \varphi$
+			\end{center}
+		\end{enumerate}
+	\end{prop}
+	For $g \in G$, the conjugation $\rho_g \colon G \sto G$ is defined as $\rho_g(h) = ghg^{-1}$. Then let $\Ad_g = T_e\rho_g$. So it can get
+	\begin{equation*}
+		\Ad_{g} \circ \Ad_{h} = \Ad_{gh},~ h \exp(X) h^{-1} = \exp{\Ad_{h}X}
+	\end{equation*}
+	Therefore, $\Ad \colon G \sto GL(\alg{g})$ is a Lie group homomorphism. Let
+	\begin{equation*}
+		\ad \defeq T_e\Ad \colon \alg{g} \sto End(\alg{g})
+	\end{equation*}
+	Then define the Lie bracket on $\alg{g}$ as
+	\begin{center}
+		\begin{tabular}{l c c l}
+			$[\cdot,\cdot] \colon$ & $\alg{g} \times \alg{g}$ & $\longrightarrow$ & $\alg{g}$ \\
+			~ & $(X,Y)$ & $\longmapsto$ & $[X,Y] \defeq \ad_{X}(Y)$
+		\end{tabular}
+	\end{center}
+	$[\cdot,\cdot]$ is bilinear, anti-symmetry and satisfies the Jacobi identity. So $(\alg{g},[\cdot,\cdot])$ is a Lie algebra.
+	\begin{exam}
+		For $G = GL(n,\C)$ a Lie group, then $\alg{g} = M(n,\C)$ and
+		\begin{equation*}
+			\exp(X) = e^X = \sum_{k=0}^{\infty}\frac{1}{k!}X^k,~\forall~X \in M(n,\C)
+		\end{equation*}
+		And by definition $Ad_A(X) = AXA^{-1}$ and $[X,Y] = XY - YX$.
+	\end{exam}
+	\begin{thm}
+		\begin{enumerate}
+			\item Suppose $H$ is a Lie subgroup of $G$. Then the Lie algebra $\alg{h}$ of $H$ can be viewed as a Lie subalgebra of $\alg{g}$ and
+			\begin{equation*}
+				\alg{h} = \bb{X \in \alg{g} \colon \exp{(tX)} \in H,~\forall~ t \in \R}
+			\end{equation*}
+			\item Let $G_e$ be the component of $G$ containing $e$. Then $G_e$ is generated by $\exp \alg{g}$ i.e.
+			\begin{equation*}
+				G_e = \bb{\exp X_1 \exp X_2 \cdots \exp X_n \colon X_j \in \alg{g},~n \in \N}
+			\end{equation*}
+		\end{enumerate}
+	\end{thm}
+	\begin{exam}
+		\begin{enumerate}
+			\item $SL(n,\C) = \bb{A \in GL(n,\C) \colon \det A = 1}$. Then by $\det\bc{e^A} = e^{\tr A}$,
+			\begin{equation*}
+				\alg{sl}(n,\C) = \bb{X \in M(n,\C) \colon \tr X = 0}
+			\end{equation*}
+			\item $U(n) = \bb{A \in GL(n,\C) \colon A^{\dagger}A = I}$. Then by $e^{A+B} = e^Ae^B$ for $[A,B] = 0$,
+			\begin{equation*}
+				\alg{u}(n) = \bb{X \in M(n,\C) \colon X^{\dagger} = -X}
+			\end{equation*}
+		\end{enumerate}
+	\end{exam}
+	
+	\subsection{Lie Group Actions}
+
+	Let $G$ be a Lie group and $M$ be a smooth manifold. Group action $G \curvearrowright M$ is a Lie group action if the map
+	\begin{center}
+		\begin{tabular}{l c c l}
+			$ev \colon$ & $G \times M$ & $\longrightarrow$ & $M$ \\
+			~ & $(g,m)$ & $\longmapsto$ & $g\cdot m$
+		\end{tabular}
+	\end{center}
+	is smooth with respect to the product smooth structure on $G \times M$. That induces a group homomorphisim 
+	\begin{center}
+		\begin{tabular}{l c c l}
+			$\tau \colon$ & $G$ & $\longrightarrow$ & $\Diff(M)$ \\
+			~ & $g$ & $\longmapsto$ & $\tau(g)$
+		\end{tabular}
+	\end{center}
+	where $\tau(g)m \defeq g \cdot m$. Let a Lie group act two manifolds $M$ and $N$ smoothly and $f \colon M \sto N$ smooth. $f$ is called $G$-equivariant if $f(g\cdot m) = g\cdot f(m)$.
+	\begin{exam}[Adjoint action]
+		The adjoint action of $G$ on $\alg{g}$ is as, 
+		\begin{center}
+			\begin{tabular}{l c c l}
+				$\Ad \colon$ & $G$ & $\longrightarrow$ & $\Diff(\alg{g})$ \\
+				~ & $g$ & $\longmapsto$ & $\Ad_g$
+			\end{tabular}
+		\end{center}
+		where vector space $\alg{g}$ is equipped with the canonical smooth structure. Let $\alg{g}^*$ be the dual vector space of $\alg{g}$. The coadjoint action of $G$ on $\alg{g}^*$ is as
+		\begin{center}
+			\begin{tabular}{l c c l}
+				$\Ad^* \colon$ & $G$ & $\longrightarrow$ & $\Diff(\alg{g}^*)$ \\
+				~ & $g$ & $\longmapsto$ & $\Ad^*_g$
+			\end{tabular}
+		\end{center}
+		where for $\xi \in \alg{g}^*$ and $X \in \alg{g}$,
+		\begin{equation*}
+			\inn{\Ad^*_g\xi,X} \defeq \inn{\xi,\Ad_{g^{-1}}X}
+		\end{equation*}
+		Also $\alg{g}$ can act on $\alg{g}$ by adjoint action
+		\begin{center}
+			\begin{tabular}{l c c l}
+				$\ad \colon$ & $\alg{g}$ & $\longrightarrow$ & $\Diff(\alg{g})$ \\
+				~ & $X$ & $\longmapsto$ & $\ad_X$
+			\end{tabular}
+		\end{center}
+		And  $\alg{g}$ acts on $\alg{g}^*$ by coadjoint action
+		\begin{center}
+			\begin{tabular}{l c c l}
+				$\ad^* \colon$ & $\alg{g}$ & $\longrightarrow$ & $\Diff(\alg{g})$ \\
+				~ & $X$ & $\longmapsto$ & $\ad^*_X$
+			\end{tabular}
+		\end{center}
+		where for $\xi \in \alg{g}^*$ and $X,Y \in \alg{g}$,
+		\begin{equation*}
+			\inn{\ad^*_X\xi,Y} \defeq -\inn{\xi,\ad_XY}
+		\end{equation*}
+	\end{exam}
+	\begin{rem}
+		If $K$ is a compact Lie group, then there is a Haar measure $d\alpha$ on $K$. Therefore, for any linear action of $K$ on some vector space $V$ with any inner product $\inn{\cdot,\cdot}$, there is an inner product $\inn{\cdot,\cdot}_K$ on $V$ called $K$-invariant defined as
+		\begin{equation*}
+			\inn{v,w}_K \defeq \int_K \inn{k \cdot v,k\cdot w} d\alpha(k)
+		\end{equation*}
+		such that the action is unitary i.e $\inn{k \cdot v,k\cdot w}_K = \inn{v,w}_K$. Therefore, considering the adjoint action of $K$ on $\alg{k}$, there is a $K$-invariant inner product on $\alg{k}$. Then $\alg{k}^* \simeq \alg{k}$ with this inner product. So $\Ad^*_k = \Ad_{k^{-1}}$ and by differentiation $\ad^*_X = -\ad_X$.
+	\end{rem}
+	Let $G \curvearrowright M$ be a Lie group action. Then there is a map
+	\begin{center}
+		\begin{tabular}{c c c}
+			$\alg{g}$ & $\longrightarrow$ & $\V(M)$ \\
+			$X$ & $\longmapsto$ & $X_M$
+		\end{tabular}
+	\end{center}
+	defined as
+	\begin{equation*}
+		X_M(m) = \left.\frac{d}{dt}\right\lvert_{t=0}\exp\bc{tX}\cdot m
+	\end{equation*}
+	and $\gamma(t) = \exp\bc{tX}\cdot m$ is the integral curve of $X_M$ starting at $m$. Moreover, by $[X,Y]_M = -[X_M,Y_M]$, this map is an anti-homomorphism. 
+	\begin{prop}
+		Let $m \in M$. The orbit of $G$ through $m$ is defined as
+		\begin{equation*}
+			G \cdot m = \bb{g \cdot m \colon g \in G}
+		\end{equation*}
+		and the isotopic subgroup (stabilizer) of $m$ in $G$ is defined as
+		\begin{equation*}
+			G_m = \bb{g \in G \colon g \cdot m = m}
+		\end{equation*}
+		\begin{enumerate}
+			\item $G \cdot m$ is an immersed submanifold of $M$ with the tangent space at $m$ is
+			\begin{equation*}
+				T_m\bc{G \cdot m} = \bb{X_M(m) \colon X  \in \alg{g}}
+			\end{equation*}
+			\item $G_m$ is a Lie subgroup of $G$ with the Lie algebra
+			\begin{equation*}
+				\alg{g}_m = \bb{X \in \alg{g} \colon X_M(m) = 0}
+			\end{equation*}
+		\end{enumerate}
+	\end{prop}
+	For $G \curvearrowright M$, define the equivalence relation on $M$ as
+	\begin{equation*}
+		m \sim n ~\Leftrightarrow~ n \in G\cdot m
+	\end{equation*}
+	Then the quotient set is
+	\begin{equation*}
+		M / G \defeq M / \sim = \bb{[m]  \colon m \in M}
+	\end{equation*}
+	The question is about the smooth structure on $M / G$.
+	\begin{defn}
+		Let $G$ act $M$ smoothly.
+		\begin{enumerate}
+			\item The action is called proper if the map
+			\begin{center}
+				\begin{tabular}{l c c l}
+					$\alpha \colon$ & $G \times M$ & $\longrightarrow$ & $M \times M$ \\
+					~ & $(g,m)$ & $\longmapsto$ & $(g \cdot m,m)$
+				\end{tabular}
+			\end{center}
+			is proper i.e. the pre-image of any compact set is compact.
+			\item The action is called free if $G_m = \bb{e}$ for any $m \in M$.
+		\end{enumerate}
+	\end{defn}
+	\begin{rem}
+		\begin{enumerate}
+			\item If the Lie group action $G \curvearrowright M$ is proper, then, in fact, any orbit $G \cdot m$ is a closed regular submanifold of $M$ so that $M/G$ with the quotient topology is Hausdorff. And if $G$ is compact, any Lie group action of $G$ is proper.
+			\item Let $G$ be a Lie group and $H \subset G$ be a closed normal subgroup. Then the action $H \curvearrowright G$ is defined as 
+			\begin{equation*}
+				h \cdot g = gh^{-1},~\forall~g \in G,~\forall~h \in H 
+			\end{equation*}
+			is free and proper. Moreover, $G / H$ has the same sense when considering as the quotient group or as the set of orbit classes.
+		\end{enumerate}
+	\end{rem}
+
+	\begin{thm}
+		Suppose the Lie group action $G \curvearrowright M$ is proper and free.
+		\begin{enumerate}
+			\item There is a unique smooth structure on $M/G$ s.t. the quotient map $\pi \colon M \sto M/ G$ is a submersion. In fact, $(\pi, M, M/G)$ is a $G$-principle fiber bundle.
+			\item If $G\curvearrowright M$ is transitive, then for any $m \in M$, the map
+			\begin{center}
+				\begin{tabular}{c c c}
+					$G / G_m$ & $\longrightarrow$ & $M$ \\
+					$[g]$ & $\longmapsto$ & $g \cdot m$
+				\end{tabular}
+			\end{center}
+			is a diffeomorphism. And such $M$ is called a homogeneous space.
+		\end{enumerate}
+	\end{thm}
+	\begin{cor}
+		Let $G$ be a Lie group and $H$ be a closed normal group. Then $G/H$ is a Lie group with the Lie algebra
+		\begin{equation*}
+			\Lie\bc{G/H} \simeq \alg{g} / \alg{h}
+		\end{equation*}
+	\end{cor}
+	\begin{exam}[Coadjoint orbits]
+		Let $G$ be a Lie group acting $\alg{g}^*$ by coadjoint action. The for $\xi \in \alg{g}^*$,
+		\begin{equation*}
+			G_{\xi} = \bb{g \in G \colon \Ad^*_{g}\xi = \xi},~\alg{g}_{\xi} = \Lie\bc{G_{\xi}} = \bb{X \in \alg{g} \colon \ad^*_X(\xi) = 0}
+		\end{equation*}
+		Since $G_{\xi}$ is a closed normal subgroup, there is a homeomorphism
+		\begin{equation*}
+			M_{\xi} \defeq G / G_{\xi} \simeq G \cdot \xi
+		\end{equation*}
+		with the Lie algebra
+		\begin{equation*}
+			\alg{g} / \alg{g}_{\xi} \simeq T_{\xi}M_{\xi}
+		\end{equation*}
+		More generally, since $M_{\xi} = M_{g\cdot \xi}$, 
+		\begin{equation*}
+			T_{g\cdot \xi}M_{\xi} = T_{g\cdot \xi}M_{g\cdot \xi} = \bb{X_{M_{\xi}}(g\cdot \xi) \colon X \in \alg{g}}
+		\end{equation*}
+		Denote $X_{M_{\xi}}(g\cdot \xi)$ by $X_{g\cdot \xi}$, then for any $X_{g\cdot \xi}$,
+		\begin{equation*}
+			X_{g\cdot \xi} = \left.\frac{d}{dt}\right\lvert_{t=0}\exp{tX}\cdot g \cdot \xi
+		\end{equation*}
+	\end{exam}
+
+	\subsection{Complex Structure}
+
+	\begin{defn}
+		\begin{enumerate}
+			\item Let $V$ be a real vector space. A complex structure on $V$ is a real-linear isomorphism $J \colon V \sto V$ s.t. $J^2 = -id$. So if define
+			\begin{equation*}
+				(x+iy)v \defeq xv+yJv
+			\end{equation*}
+			then $V$ is a complex vector space.
+			\item Let $M$ be a smooth manifold. An almost complex structure on $M$ is a smooth map $J \colon TM \sto TM$ s.t. for any $m \in M$, $J_m \colon T_mM \sto T_mM$ is a complex structure on $T_mM$.
+		\end{enumerate}
+	\end{defn}
+	\begin{rem}
+		Note that if a real-vector space can be equipped with a complex structure, it should be even $\R$-dimensional.
+	\end{rem}
+	$(M,J)$ is an almost complex manifold. Let $T_{\C}M = TM \otimes \C$ and extending $J$ on $T_{\C}M$ by
+	\begin{equation*}
+		J(v \otimes z) = Jv \otimes z,~\forall~ v \in TM
+	\end{equation*}
+	Since $J$ has two eigenvalues $i$ and $-i$, the eigenspace decomposition of $T_{\C}M$ is $T_{\C}M = T_{1,0}\oplus T_{0,1}$,
+	\begin{equation*}
+		T_{1,0} = \bb{w \in T_{\C}M \colon Jw = iw},~T_{0,1} = \bb{w \in T_{\C}M \colon Jw = -iw}
+	\end{equation*}
+	Any vector in $T_{1,0}$ (or $T_{0,1}$) is called (anti-)holomorphic.
+
+	In fact, any holomorphic vector has the form $v \otimes 1-Jv \otimes i$ for some $v \in TM$, while any anti-holomorphic vector has the form $v \otimes 1+Jv \otimes i$ for some $v \in TM$. So for any $w \in T_{\C}M$ written as $w = w_{1,0}+w_{0,1}$, then
+	\begin{equation*}
+		w_{1,0} = \frac{1}{2} \bc{w-iJw},~w_{0,1} = \frac{1}{2} \bc{w+iJw}
+	\end{equation*}
+	
+	Similarly, let $T^*_{\C}M = T^*M \otimes \C$. Then the corresponding decomposition of $T_{\C}M$ is $T^*_{\C}M = T^{1,0} \oplus T^{0,1}$, where
+	\begin{equation*}
+		\begin{split}
+			T^{1,0} = T_{1,0}^* &= \bb{\eta \in T^*_{\C}M \colon \eta(Jw) = i\eta(w),~\forall~w \in T_{\C}M} \\
+			&= \bb{\xi \otimes 1 - (\xi \circ J) \otimes i \colon \xi \in T^*M}\\
+			T^{0,1} = T_{0,1}^* &= \bb{\eta \in T^*_{\C}M \colon \eta(Jw) = -i\eta(w),~\forall~w \in T_{\C}M} \\
+			&= \bb{\xi \otimes 1 + (\xi \circ J) \otimes i \colon \xi \in T^*M}
+		\end{split}
+	\end{equation*}
+	Then let
+	\begin{equation*}
+		\Omega^k\bc{M,\C} = \bigoplus_{l+m = k} \Omega^{l,m}\bc{M,\C}
+	\end{equation*}
+	where $\Omega^{l,m}\bc{M,\C} = \Gamma^{\infty}\bc{\Lambda^lT^{1,0} \wedge \Lambda^kT^{1,0}}$. Let $\pi^{l,m} \colon \Omega^k\bc{M,\C} \sto \Omega^{l,m}\bc{M,\C}$ be the projection. For $l+m = k$,
+	\begin{center}
+		\begin{tikzcd}
+			\partial \colon \Omega^{l,m}\bc{M,\C} \arrow[r, "d"] & \Omega^{k+1}\bc{M,\C} \arrow[r, "\pi^{l+1,m}"] & \Omega^{l+1,m}\bc{M,\C} \\
+			\clo{\partial} \colon \Omega^{l,m}\bc{M,\C} \arrow[r, "d"] & \Omega^{k+1}\bc{M,\C} \arrow[r, "\pi^{l,m+1}"] & \Omega^{l,m+1}\bc{M,\C}
+		\end{tikzcd}
+	\end{center}
+	\begin{rem}
+		\begin{enumerate}
+			\item If $f \colon M \sto \C$, then it can see $df = \partial f + \clo{\partial} f$. But in general, $d \neq \partial + \clo{\partial}$.
+			\item For smooth $f \colon M \sto \C$, $f$ is called holomorphic if $(df)_m \in T^{1,0}_m$ for any $m \in M$.
+			\item Let $(M,J_M)$ and $(N,J_N)$ be two almost complex manifolds and $g \colon M \sto N$ be smooth. $g$ is called holomorphic if $Tg(T_{1,0}) \subset T_{1,0}$.
+		\end{enumerate}
+	\end{rem}
+	\begin{exam}
+		Let $\C^n$ be a real manifold with the coordinate $\bb{x_1,y_1,\cdots,x_n,y_n}$. Let $J$ be an almost complex structure defined as
+		\begin{equation*}
+			J \frac{\partial}{\partial x_j} = \frac{\partial}{\partial y_j},~J \frac{\partial}{\partial y_j} = -\frac{\partial}{\partial x_j}
+		\end{equation*}
+		For complex coordinate $\bb{z_1,\cdots,z_n}$, i.e. $z_j = x_j+iy_j$, let
+		\begin{equation*}
+			\begin{split}
+				\frac{\partial}{\partial z_j} = \frac{1}{2} \bc{\frac{\partial}{\partial x_j} - i\frac{\partial}{\partial y_j}} \in T_{1,0},~&\frac{\partial}{\partial \clo{z}_j} = \frac{1}{2} \bc{\frac{\partial}{\partial x_j} + i\frac{\partial}{\partial y_j}} \in T_{0,1} \\
+				dz_j = dx_j + idy_j \in \Omega^{1,0},~&d\clo{z}_j = dx_j - i dy_j \in \Omega^{0,1}
+			\end{split}
+		\end{equation*}
+		Then for $f \colon \C^n \sto \C$, it can see
+		\begin{equation*}
+			df = \underbrace{\sum_{j=1}^n \frac{\partial f}{\partial z_j} dz_j}_{=\partial f \in \Omega^{1,0}} +  \underbrace{\sum_{j=1}^n \frac{\partial f}{\partial \clo{z}_j} d\clo{z}_j}_{=\clo{\partial} f \in \Omega^{0,1}}
+		\end{equation*}
+		$f$ is holomorphic if and only if $\clo{\partial} f = 0$ that is the Cauchy-Riemann equation.
+	\end{exam}
+	\begin{defn}
+		An almost complex manifold $(M,J)$ is called a complex manifold of dimension $n$ if, for any $m \in M$, there is a neighborhood $U$ of $m$ s.t. $U \sto V \subset \C^n$ is biholomorphic. Then this $J$ is called integrable.
+	\end{defn}
+	\begin{rem}
+		For a complex manifold $(M,J)$, the tangent space of $M$ at $m$ is
+		\begin{equation*}
+			T_{m}M \defeq T_{1,0,m}M = \bb{X  \in T_{\C}M \colon JX = iX}
+		\end{equation*}
+		i.e. all holomorphic vectors, because as this definition, for any $f \colon M \sto \C$ is holomorphic and smooth vector field $X_M \in TM = \cup T_mM$,  $X_Mf$ is holomorphic.
+	\end{rem}
+	For any real vector fields $u,v$ and a complex structure $J$, define the Nijenhuis tensor $N_J$
+	\begin{equation*}
+		N_J(u,v) = [Ju,Jv] - J[Ju,v] - J[u,Jv] - [u,v]
+	\end{equation*}
+	\begin{thm}[Newlander-Nirenberg]
+		For an almost complex manifold $(M,J)$,
+		\begin{equation*}
+			(M,J) \text{ is complex}~\Leftrightarrow~ N_J = 0 ~\Leftrightarrow~ [T_{1,0},T_{1,0}] \subset T_{1,0} ~\Leftrightarrow~ d = \partial + \clo{\partial}~\Leftrightarrow~ \partial^2 = \clo{\partial}^2 = 0
+		\end{equation*}
+	\end{thm}
+	
+	\subsection{Complexification of Lie Groups}
+
+	\begin{defn}
+		A complex Lie group $G$ is a group and also a complex manifold such that 
+		\begin{center}
+			\begin{tabular}{ccccccc}
+				$G \times G$ & $\rightarrow$ & $G$,&~& $G$ & $\rightarrow$ & $G$\\
+				$(g,h)$ & $\mapsto$ & $gh$ & ~&$g$& $\mapsto$ & $g^{-1}$
+			\end{tabular}
+		\end{center}
+		are holomorphic.
+	\end{defn}
+	\begin{rem}
+		Let $\alg{g} = \Lie(G)$ with the complex structure $\alg{g} \sto \alg{g} \colon X \mapsto JX \defeq iX$. $[\cdot,\cdot]$ is complex bilinear by $\ad \circ J = J \circ \ad$. Therefore, $\alg{g}$ is a complex Lie algebra. Conversely, if the Lie algebra $\alg{g}$ is equipped with a complex structure, then there is an integrable complex structure $J$ on $G$.
+	\end{rem}
+
+	\begin{thm}
+		Let $K$ be a compact Lie group with Lie algebra $\alg{k}$. There is a unique complex Lie group $G$ and a Lie group homomorphism $\iota \colon K \to G$ s.t. 
+		\begin{enumerate}
+			\item $(G,\iota)$ has the universal property, that is for any complex Lie group $H$ and a Lie group homomorphism $\rho \colon K \sto H$, there is unique holomorphic Lie group homomorphism $\rho_{\C} \colon G \sto H$ s.t. $\rho = \rho_{\C}  \circ \iota$.
+			\item $\iota$ is injective, $\iota(K)$ is a maximal compact subgroup of $G$,  $G/\iota(K)$ is connected and $T_e\iota(\alg{k})$ is a totally real subspace of $\alg{g}$.
+		\end{enumerate}
+	\end{thm}
+	\begin{rem}
+		In fact, complexifying a real Lie algebra $\alg{k}$ as $\alg{k}_{\C} = \alg{k} \oplus i\alg{k}$ with the extended Lie bracket defined as
+		\begin{equation*}
+			[X_1+iX_2, Y_1+iY_2] = ([X_1,Y_1] - [X_2,Y_2]) + i ([X_1,Y_2] + [X_2,Y_1])
+		\end{equation*}
+		$\alg{k}_{\C}$ is a complex Lie algebra. And $G = K_{\C}$ with the Lie algebra $\alg{k}_{\C}$.
+	\end{rem}
+	
+	\begin{thm}[Cartan Decomposition]
+		Let $K$ be a compact Lie group with $\alg{k}$ and $G = K_{\C}$ with $\alg{g} = \alg{k} \oplus i\alg{k}$. Then the map is a diffeomorphism.
+		\begin{center}
+			\begin{tabular}{c c c}
+				$K \times \alg{k}$ & $\longrightarrow$ & $G$ \\
+				$(k,X)$ & $\longmapsto$ & $\exp(iX)k$
+			\end{tabular}
+		\end{center}
+	\end{thm}
+
+	\begin{defn}
+		A complex Lie group $G$ is called reductive if $G = K_{\C}$ for some compact Lie group $K$. If $G$ is reductive and the center of $\alg{g}$ is trivial, then $\alg{g}$ is called semisimple.
+	\end{defn}
+	
+	\begin{exam}
+		$GL(n,\C)$ and $SL(n,\C)$ are reductive. And $\alg{sl}(n,\C)$ is semisimple but $\alg{gl}(n,\C)$ is not.
+		\begin{enumerate}
+			\item $GL(n,\C) = U(n)_{\C}$ and $\alg{gl}(n,\C) = \alg{u}(n)_{\C}$. Moreover, the polar decomposition is the Cartan decompostion, that is for $A \in GL(n,\C)$,
+			\begin{equation*}
+				A = e^XU = e^{iY}U,~\text{where }U \in U(n),~X=iY \in \Herm(n)~\Rightarrow~ Y \in \alg{u}(n)
+			\end{equation*}
+			\item $SL(n,\C) = SU(n)_{\C}$ and $\alg{sl}(n,\C) = \alg{su}(n)_{\C}$.
+		\end{enumerate}
+	\end{exam}
+
+	Let compact Lie group $K$ act on a complex manifold $(M,J)$ smoothly i.e.
+	\begin{center}
+		\begin{tabular}{l c c l}
+			$\tau \colon$ & $K$ & $\longrightarrow$ & $\Diff(M)$ \\
+			~ & $g$ & $\longmapsto$ & $\tau(g)$
+		\end{tabular}
+	\end{center}
+	is a Lie group homomorphism. Then by the above theorem, it can be uniquely extended on $G = K_{\C}$. Therefore, $G$ acts on $M$ holomorphically. And the map is defined as
+	\begin{center}
+		\begin{tabular}{c c c}
+			$\alg{g} = \alg{k}+i\alg{k}$ & $\longrightarrow$ & $\V(M)$ \\
+			$X+iY$ & $\longmapsto$ & $X_M+JY_M$
+		\end{tabular}
+	\end{center}
+	where $\V(M)$ is the holomorphic vector field on $M$. It is well-defined since $X_M$ and $Y_M$ are holomorphic.
+
+	Let $K$ be a compact Lie group. Then there is a bi-invariant Riemannian metric $\inn{\cdot,\cdot}$ on $K$ and
+	\begin{equation*}
+		\inn{\ad_ZX,Y}_{\alg{k}} = -\inn{X,\ad_ZY}_{\alg{k}},~\forall~X,Y,Z \in \alg{k}
+	\end{equation*}
+	Therefore, $K$ is a Riemannian geometry. Moreover, the usual exponential map of the Lie group coincides with the exponential map of Riemannian manifold. 
+
+	Let $G=K_{\C}$ be the complexified Lie group and define the inner product on $\alg{g}$
+	\begin{equation*}
+		\inn{X_1+iY_1,X_2+iY_2}_{\alg{g}} \defeq \inn{X_1,X_2}_{\alg{k}} + \inn{Y_1,Y_2}_{\alg{k}}
+	\end{equation*}
+	And this metric is $K$-invariant and $\alg{k} \perp i\alg{k}$. So instead of considering the Riemannian structure on $G$, defining a metric on $N \defeq G/K$, the right cosets of $G$. Let $\pi \colon G \sto N$ be the projection. There is a vector bundle isomorphism
+	\begin{center}
+		\begin{tabular}{c c l}
+			$G \times \alg{k}$ & $\longrightarrow$ & $TN$ \\
+			$(g,\eta)$ & $\longmapsto$ & $T_e(\pi \circ L_g)(i\eta)$
+		\end{tabular}
+	\end{center}
+	where $L_g(h) = gh$. Then it can define a Riemannian metric $\inn{\cdot,\cdot}$ on $N$. 
+
+	For $v_1,v_2 \in T_{\pi(g)}M$, there are $\eta_1,\eta_2 \in \alg{k}$ s.t. $v_j = T_e(\pi \circ L_g)(i\eta_j)$.
+	\begin{equation*}
+		\inn{v_1,v_2}_{\pi(g)} \defeq \inn{\eta_1,\eta_2}_{\alg{k}}
+	\end{equation*}
+	Therefore, it is a $G$-invariant Riemannian metric. And with this Riemannian structure, $N$ is a complete, connected, and simply connected Riemannian metric with nonpositive sectional curvature. Moreover, any geodesic line on $N$ has the form
+	\begin{equation*}
+		\gamma(t) = \pi(g\exp(tiX)),\text{ for some }g\in G,~X \in \alg{k}
+	\end{equation*}
+
+	\subsection{Roots and Weyl Chambers}
+
+	\begin{defn}
+		Let $K$ be a compact Lie group with Lie algebra $\alg{k}$.
+		\begin{enumerate}
+			\item A maximal torus $T$ in $K$ is a maximal connected commutative subgroup of $K$.
+			\item A Cartan subalgebra of $\alg{k}$ is a maximal commutative subalgebra of $\alg{k}$.
+		\end{enumerate}
+	\end{defn}
+	\begin{rem}
+		\begin{enumerate}
+			\item If $T$ is a maximal torus, then $\alg{t} = \Lie T$ is a Cartan subalgebra. Conversely, if $\alg{t}$ is a Cartan subalgebra, then $T \defeq \exp \alg{t}$ is a maximal torus.
+			\item Let $G = K_{\C}$ with Lie algebra $\alg{g} = \alg{k} + i\alg{k}$. If $\alg{t}$ is a Cartan algebra of $\alg{k}$, then $\alg{h} = \alg{t}_{\C} = \alg{t} + i\alg{t}$ is a maximal commutative subalgebra of $\alg{g}$. $\alg{h}$ is called a Cartan subalgebra of $\alg{g}$.
+		\end{enumerate}
+	\end{rem}
+
+	\begin{thm}
+		Let $K$ be a compact Lie group with Lie algebra $\alg{k}$. Then
+		\begin{equation*}
+			\alg{k} = \alg{k}^{\prime} \oplus \alg{z(k)}
+		\end{equation*}
+		where $\alg{z(k)}$ is the center of $\alg{k}$ and $\alg{k}^{\prime}$ is the ideal generated by $[\alg{k},\alg{k}]$, the set of commutators. And $\alg{k}^{\prime}$ is semisimple i.e. the center of $\alg{k}^{\prime}$ is trivial.
+	\end{thm}
+	\begin{rem}
+		\begin{enumerate}
+			\item For complex reductive Lie group $G=K_{\C}$ with Lie algebra $\alg{g}$, it is also true
+			\begin{equation*}
+				\alg{g} = \alg{g}^{\prime} \oplus \alg{z(g)}
+			\end{equation*}
+			where $\alg{z(g)} = \alg{z(k)}_{\C}$, the center of $\alg{g}$, and $\alg{g}^{\prime} = \alg{k}^{\prime}_{\C}$ that is semisimple.
+			\item In fact, $\alg{k}^{\prime}$ is the Lie algebra of $K^{\prime}$ which is the closed normal subgroup of $K$ generated by commutators $k_1k_2k_1^{-1}k_2^{-1}$ for $k_1,k_2 \in K$.
+		\end{enumerate}
+	\end{rem}
+
+	Let $G$ act on $\alg{g}$ by adjoint action. Since $K$ is compact, there is a $K$-invariant inner product $\inn{\cdot,\cdot}$ on $\alg{g}$. Therefore, by differentiating of $\Ad$, 
+	\begin{equation*}
+	 	\inn{\ad_X Y,Z} = -\inn{Y,\ad_X Z},~\forall~ X \in \alg{k}
+	\end{equation*}
+	i.e. $\ad_X$ is skew-symmetry for any $X \in \alg{k}$ and so $\ad_X$ is diagonalizable. Let $\alg{t}$ be a Cartan subalgebra of $\alg{k}$ and $\alg{h} = \alg{t}_{\C}$. Then for any $H = H_1+iH_2 \in \alg{h}$, $\ad_H = \ad_{H_1}+i\ad_{H_2}$ is diagonalizable by the commutativity of $\ad_{H_1}$ and $\ad_{H_2}$. So $\bb{\ad_{H} \colon H \in \alg{h}}$ is simultaneously diagonalizable. Then for $\alpha \in \alg{h}^*$ i.e. $\alpha \colon \alg{t} \sto \C$ is linear, let
+	\begin{equation*}
+		\alg{g}_{\alpha} \defeq \bb{X \in \alg{g} \colon [H,X] = \alpha(H)X,~\forall~H \in \alg{h}}
+	\end{equation*}
+	So $\alg{g}_{\alpha}$ is a eigenspace for $\bb{\ad_{H} \colon H \in \alg{h}}$ for some $\alpha \in \alg{h}^*$. Clearly, $\alg{g}_{0} = \alg{h}$.
+	\begin{defn}
+		The root system of $\alg{g}$ with respect to a Cartan subalgebra $\alg{h}$ is
+		\begin{equation*}
+			R \defeq \bb{\alpha \in \alg{h}^* \colon \alpha \neq 0,~\alg{g}_{\alpha} \neq 0}
+		\end{equation*}
+	\end{defn}
+	\begin{rem}
+		\begin{enumerate}
+			\item Since $V$ is finite-dimensional, $R$ is finite and the eigenspace decomposition of $\alg{g}$ is
+			\begin{equation*}
+				\alg{g} = \alg{h} \oplus \bigoplus_{\alpha \in R} \alg{g}_{\alpha}
+			\end{equation*}
+			\item Since $\ad_X$ is skew-symmetry for each $X \in \alg{t}$, any root $\alpha$ is pure imaginary on $\alg{t}$. Therefore, $R \subset (i\alg{t})^*$, where $i\alg{t}$ is viewed as a real vector space. 
+			\item For any $\alpha,\beta \in R \cup \{0\}$, $[\alg{g}_{\alpha},\alg{g}_{\beta}] = \alg{g}_{\alpha+\beta}$.
+			\item If $\alg{g}$ is semisimple i.e. $\alg{z(g)} = \{0\}$, then $(i\alg{t})^* = \spn_{\R}R$. In general, let $\alg{t}^{\prime} = \alg{t} \cap \alg{k}^{\prime}$, then $(i\alg{t}^{\prime})^* = \spn_{\R}R$.
+			\item For any $\alpha \in R$, $-\alpha \in R$. Moreover, $\alg{g}_{-\alpha} = \vartheta \alg{g}_{\alpha}$ where $\vartheta(X+iY) = X-iY$ for $X+iY \in \alg{g}$ and $X,Y \in \alg{k}$.
+		\end{enumerate}
+	\end{rem}
+
+	\begin{defn}[Killing Form]
+		Let $G=K_{\C}$ be a reductive Lie Group with Lie algebra $\alg{g} = \alg{k}_{\C}$. The Killing form is a bilinear form 
+		\begin{center}
+			\begin{tabular}{l c c l}
+				$B \colon$ & $\alg{k} \times \alg{k}$ & $\longrightarrow$ & $\R$ \\
+				~ & $(X,Y)$ & $\longmapsto$ & $\tr\bc{\ad_X \circ \ad_Y}$
+			\end{tabular}
+		\end{center}
+		Moreover, $B$ can be extended to $\alg{g}$.
+	\end{defn}
+
+	\begin{thm}
+		\begin{enumerate}
+			\item For $k \in K$ and $X,Y,Z \in \alg{g}_{\C}$,
+			\begin{equation*}
+				B(\Ad_kX,\Ad_kY) = B(X,Y),~B(\ad_ZX,Y) = -B(X,\ad_ZY)
+			\end{equation*}
+			\item (Cartan's Criterion) $\alg{g}_{\C}$ is semisimple if and only if $B$ is nonsingular on $\alg{g} \times \alg{g}$.
+			\item In general, $B$ is nonsingular on $\alg{g}_{\alpha} \times \alg{g}_{-\alpha}$ for $\alpha \in R$ and is negative definite on $\alg{g}^{\prime} \times \alg{g}^{\prime}$. And thus $B$ is an inner product on $i\alg{t}^{\prime}$.
+		\end{enumerate}
+	\end{thm}
+
+	\begin{defn}
+		Let $G=K_{\C}$ with semisimple Lie algebra $\alg{g}$. Then since $B$ is an inner product on $i\alg{t}$, for any $\alpha \in (i\alg{t})^{*}$, there is a unique $u_{\alpha} \in i\alg{t}$ s.t.
+		\begin{equation*}
+			\alpha(H) = B(H,u_{\alpha}),~\forall~H \in i\alg{t}
+		\end{equation*}
+		If $\alpha \in R$, then let
+		\begin{equation*}
+			h_{\alpha} \defeq \frac{2u_{\alpha}}{B(u_{\alpha},u_{\alpha})}
+		\end{equation*}
+		called the coroot of $\alpha$. The coroot system is
+		\begin{equation*}
+			R^{\vee} \defeq \bb{h_{\alpha} \colon \alpha \in R} \subset i\alg{t}
+		\end{equation*}
+	\end{defn}
+	\begin{rem}
+		If $\alg{g}$ is not semisimple, then for general $\alpha \in (i\alg{t})^*$ there may no $u_{\alpha}$ because $B$ is singular on $i\alg{t}$. But if $\alpha \in R$, $u_{\alpha}$ and $h_{\alpha}$ can be also defined. Let $\alg{t}^{\prime} = \alg{k}^{\prime} \cap \alg{t}$.
+		\begin{equation*}
+			\alg{k} = \alg{k}^{\prime} \oplus \alg{z(k)} ~\Rightarrow~ i\alg{t} = i\alg{t}^{\prime} \oplus i\bc{\alg{z(k)} \cap \alg{t}}
+		\end{equation*}
+		If $H \in i\bc{\alg{z(k)} \cap \alg{t}}$, $[H,X] = 0$ for any $X \in \alg{g}$. So $\alpha(H) = 0$. Therefore, $\alpha$ can be viewed as a linear map on $i\alg{t}^{\prime}$ i.e. $\alpha \in (i\alg{t}^{\prime})^{*}$.  By above, since $B$ is nonsingular on $i\alg{t}^{\prime}$, there is a $u_{\alpha} \in i\alg{t}^{\prime}$ s.t.
+		\begin{equation*}
+			\alpha(H) = B(H,u_{\alpha}),~\forall~H \in i\alg{t}
+		\end{equation*}
+		and thus it can define the coroot $h_{\alpha}$.
+	\end{rem}
+
+	\begin{exam}
+		Let $G = SL(2,\C)$ with $\alg{g} = \alg{sl}(2,\C)$ and $K  = SU(2)$ with $\alg{k} = \alg{su}(2)$. Then
+		\begin{equation*}
+			\alg{t} = \spn_{\R}\bc{
+					\begin{array}{cc}
+						i & 0\\
+						0 & -i
+					\end{array}
+				},~\alg{h} = \spn_{\C}\bc{
+					\begin{array}{cc}
+						1 & 0\\
+						0 & -1
+					\end{array}
+				}
+		\end{equation*}
+		Let $X = \bc{\begin{smallmatrix}
+					0 & 1 \\
+					0 & 0
+		\end{smallmatrix}}$, $Y = \bc{\begin{smallmatrix}
+					0 & 0 \\
+					1 & 0
+		\end{smallmatrix}}$ and $H = \bc{\begin{smallmatrix}
+					1 & 0 \\
+					0 & -1
+		\end{smallmatrix}}$. Then
+		\begin{equation*}
+			[H,X] = 2X,~[H,Y] = -2Y
+		\end{equation*}
+		Therefore, the two roots are $\alpha_1,\alpha_2 \colon \alg{h} \sto \C$, 
+		\begin{equation*}
+			\alpha_1(H) = 2,~\alpha_2(H)  = -2
+		\end{equation*}
+		and $\alg{g}_{\alpha_1} = \spn_{\C}X$, $\alg{g}_{\alpha_2} = \spn_{\C}Y$. So $\alg{g} = \spn_{\C}\bb{H,X,Y}$ is the root decomposition.
+	\end{exam}
+
+	\begin{thm}[$\alg{sl}(2,\C)$ Triple]
+		Let $G = K_{\C}$ be a reductive Lie group with Lie algebra $\alg{g} = \alg{k}_{\C}$. Let $\alg{h} = \alg{t}_{\C}$ be a Cartan subalgebra of $\alg{g}$ and $R$ be the corresponding root system. Let $\alpha \in R$. Then there is a $X_{\alpha} \in \alg{g}_{\alpha}$ s.t. let $Y_{\alpha} = -\vartheta X_{\alpha} \in \alg{g}_{-\alpha}$ and $H_{\alpha} = h_{\alpha} \in \alg{h}$,
+		\begin{equation*}
+			\alg{sl}(2,\C) \simeq \spn_{\C}\bb{H_{\alpha},X_{\alpha},Y_{\alpha}}
+		\end{equation*}
+	\end{thm}
+	\begin{cor}
+		Let $G,\alg{t}$ and $R$ as above and $\alpha \in R$.
+		\begin{enumerate}
+			\item $\R \alpha \cap R = \bb{\pm \alpha}$.
+			\item For any $\alpha,\beta \in R$, $\alpha(h_{\beta}) \in \Z$.
+			\item $\dim \alg{g_{\alpha}} = 1$.
+		\end{enumerate}
+	\end{cor}
+
+	Let $G = K_{\C}$ be a reductive Lie group with semisimple Lie algebra $\alg{g} = \alg{k}_{\C}$ and $\alg{h} = \alg{t}_{\C}$ be a Cartan subalgebra. Then the Killing form $B$ is an inner product on $i\alg{t}$. Transporting $B$ to $(i\alg{t})^*$ as an inner product defined as
+	\begin{equation*}
+		B(\alpha,\beta) = B(u_{\alpha},u_{\beta}),~\forall~\alpha,\beta \in (i\alg{t})^*
+	\end{equation*}
+	With equipped $B$, $(i\alg{t})^{*}$ is a Euclidean space. And by above for any $\alpha, \beta \in R$,
+	\begin{equation*}
+		4\cos^2 \theta_{\alpha \beta}  = \alpha(H_{\beta})\beta(H_{\alpha}),~\alpha(H_{\beta}) = \frac{2\norm{\alpha}\cos \theta_{\alpha \beta}}{\norm{\beta}}
+	\end{equation*}
+	Therefore, there are only finite cases for $\theta_{\alpha \beta}$.
+	\begin{enumerate}
+		\item $\theta_{\alpha \beta} = \frac{\pi}{2}$;
+		\item $\norm{\alpha} = \norm{\beta}$, then $\theta_{\alpha \beta} = \frac{\pi}{3}$ or $\frac{2\pi}{3}$;
+		\item $\norm{\alpha} = \sqrt{2}\norm{\beta}$, then $\theta_{\alpha \beta} = \frac{\pi}{4}$ or $\frac{3\pi}{4}$;
+		\item $\norm{\alpha} = \sqrt{3}\norm{\beta}$, then $\theta_{\alpha \beta} = \frac{\pi}{6}$ or $\frac{5\pi}{6}$.
+	\end{enumerate}
+	If it is not semisimple, it can replace $i\alg{t}$ and $(i\alg{t})^*$ by $i\alg{t^{\prime}}$ and $(i\alg{t^{\prime}})^*$.
+
+	\begin{defn}
+		Let $G = K_{\C}$ be a reductive Lie group with semisimple Lie algebra $\alg{g} = \alg{k}_{\C}$ and $\alg{h} = \alg{t}_{\C}$ be a Cartan subalgebra with the corresponding root system $R$. (If not semisimple, replacing $\alg{t}$ to $\alg{t}^{\prime}$.)
+		\begin{enumerate}
+			\item Let $\gamma \in (i\alg{t})^{*}$ s.t. $V = \bb{\alpha \in (i\alg{t})^{*} \colon B(\alpha,\gamma) = 0} \cap R = \varnothing$. Then define
+			\begin{equation*}
+				R^{+} = \bb{\alpha \in R \colon B(\alpha, \gamma) > 0},~R^{-} = \bb{\alpha \in R \colon B(\alpha, \gamma) < 0}
+			\end{equation*}
+			be the positive and negative root system.
+			\item A system of simple roots is a subset $\Delta \subset R$ that is a basis of $(i\alg{t})^{*}$ s.t. for any $\beta \in R$,
+			\begin{equation*}
+				\beta = \sum_{\alpha \in \Delta} k_{\alpha}\alpha
+			\end{equation*}
+			and either $\bb{k_{\alpha} \colon \alpha \in \Delta} \subset \Z_{\geqslant 0}$ or $\bb{k_{\alpha} \colon \alpha \in \Delta} \subset \Z_{\leqslant 0}$.
+		\end{enumerate}
+	\end{defn}
+	\begin{rem}
+		In fact, for any $\gamma$ with $V = \bb{\alpha \in (i\alg{t})^{*} \colon B(\alpha,\gamma) = 0} \cap R = \varnothing$, there is a unique system of simple roots $\Delta$ s.t.
+		\begin{equation*}
+				R^{+} = \bb{\beta \in R \colon \beta = \sum_{\alpha \in \Delta} k_{\alpha}\alpha,~k_{\alpha} \in \Z_{\geqslant 0}},~R^{-} = \bb{\beta \in R \colon \beta = \sum_{\alpha \in \Delta} k_{\alpha}\alpha,~k_{\alpha} \in \Z_{\leqslant 0}}
+		\end{equation*}
+		Therefore, the system of simple roots exists and there is a one-one onto relation of
+		\begin{center}
+			\{Positive root systems\} $\sim$ \{Systems of simple roots\}
+		\end{center}
+	\end{rem}
+
+	\begin{defn}
+		Given the same settings as above, then an open Wely chamber is a connected component of $(i\alg{t})^* \backslash \cup_{\alpha \in \Delta} V_{\alpha}$, where
+		\begin{equation*}
+			V_{\alpha} = \{\beta \in (i\alg{t})^* \colon B(\beta,\alpha) = 0\} 
+		\end{equation*}
+		If $\Delta$ is a system of simple roots, then the open positive Weyl chamber is defined as
+		\begin{equation*}
+			C(\Delta) = \bb{\beta \in (i\alg{t})^* \colon B(\beta,\alpha) > 0,~\forall~\alpha \in \Delta}
+		\end{equation*}
+	\end{defn}
+	\begin{rem}
+		Conversely, choose a Weyl chamber $C$, then there is a unique system of simple roots $\Delta$ s.t. $C = C(\Delta)$ is the positive Wey chamber.
+	\end{rem}
+
+	Let $G=K_{\C}$ be a reductive Lie group with Lie algebra $\alg{g} = \alg{k}_{\C}$ and $T$ be a maximal torus of $K$ with Lie algebra $\alg{t}$. Let $N = \bb{k \in K \colon kTk^{-1} = T}$. Then the Weyl group is defined as $W = N / T$. $W$ acts $\alg{t}$ and $\alg{t}^*$. For $w \defeq [w] \in W$ and $H \in i\alg{t}$ and $\alpha \in \alg{t}^*$,
+	\begin{equation*}
+			w \cdot H \defeq  \Ad_{w} H,~w \cdot \alpha \defeq \Ad^{*}_{w}\alpha
+	\end{equation*}
+	The actions can be extended on $i\alg{t}$ and $(i\alg{t})^*$. There is a more explicit expression of $W$.
+
+	For $\alpha \in \Delta$, the reflection $r_{\alpha} \colon (i\alg{t}^{\prime})^* \sto (i\alg{t}^{\prime})^*$ is defined as
+	\begin{equation*}
+		r_{\alpha}(\beta) \defeq \beta - \frac{2B(\beta,\alpha)}{B(\alpha,\alpha)}\alpha  = \beta - \beta(h_{\alpha})\alpha
+	\end{equation*}
+	i.e. $r_{\alpha}$ is the reflection about the hyperplane orthogonal to $\alpha$. Then
+	\begin{center}
+		$W =$ the group generated by $\{r_{\alpha} \colon \alpha \in \Delta\}$
+	\end{center}
+	\begin{thm}
+		Let $W$ be the Weyl group acting on $(i\alg{t})^{*}$ (or $(i\alg{t}^{\prime})^{*}$) and $C$ be an open Weyl chamber.
+		\begin{enumerate}
+			\item For any $\alpha \in R$, $w \cdot \alpha \in R$.
+			\item Let  $W$ act on the set of Weyl chambers. Then this action is transitive.
+			\item Let $\alpha,\alpha^{\prime} \in \clo{C}$. If $w \cdot \alpha =\alpha^{\prime}$ for some $w \in W$, then $\alpha=\alpha^{\prime}$.
+			\item Let $\alpha \in C$. If $w \cdot \alpha = \alpha$ for some $w \in W$, then $w = id$.
+			\item If $\Delta_1$ and $\Delta_2$ are two systems of simple roots, then there is a unique $w \in W$ s.t. $w \cdot \Delta_1 = \Delta_2$.
+			\item For any $\beta  \in (i\alg{t})^*$, $W \cdot \beta \cap \clo{C}$ contains exact one element.
+		\end{enumerate}
+	\end{thm}
+
+	The general root system is defined as the following.
+	\begin{defn}
+		A root system $(E,R)$ consists a finite-dimensional real Euclidean space $E$ and a finite subset $R$ containing nonzero elements s.t.
+		\begin{enumerate}
+			\item $E = \spn_{\R}R$.
+			\item For any $\alpha \in R$, $\R \alpha \cap R = \bb{\pm \alpha}$.
+			\item For $\alpha \in R$,  $r_{\alpha}(R) \subset R$, where $r_{\alpha} \colon E \sto E$ is defined as
+			\begin{equation*}
+				r_{\alpha}(\beta) \defeq \beta - \frac{2\inn{\beta,\alpha}}{\inn{\alpha,\alpha}}\alpha 
+			\end{equation*}
+			\item For any $\alpha,\beta \in R$,
+			\begin{equation*}
+				\frac{2\inn{\beta,\alpha}}{\inn{\alpha,\alpha}} \in \Z
+			\end{equation*}
+		\end{enumerate}
+	\end{defn}
+	\begin{rem}
+		For the semisimple case, $((i\alg{t})^*,R)$ is a root system. For the general case, $((i\alg{t}^{\prime})^*,R)$ is a root system.
+	\end{rem}
+
+	\begin{defn}
+		Let $G=K_{\C}$ be a reductive Lie group with Lie algebra $\alg{g} = \alg{k}_{\C}$. Let $\alg{t} = \Lie T$ be a Cartan subalgebra of $\alg{k}$ with the corresponding root system $R$ and choosing a system of simple roots $\Delta$. Let $\lambda \in (i\alg{t})^{*}$.
+		\begin{enumerate}
+			\item $\lambda$ is called algebraically integral (in weight lattice) if
+			\begin{equation*}
+				\lambda(h_{\alpha}) \in \Z,~\forall~ \alpha \in R
+			\end{equation*}
+			\item  $\lambda$ is called analytically integral if
+			\begin{equation*}
+				\lambda(H) \in 2\pi i\Z,~\forall~H \in \Gamma 
+			\end{equation*}
+			where $\Gamma = \bb{H \in \alg{t} \colon \exp H = I}$
+			\item $\lambda$ is called dominant with respect to a system of simple roots $\Delta$ if
+			\begin{equation*}
+				\lambda \in \clo{C(\Delta)}
+			\end{equation*}
+		\end{enumerate}
+	\end{defn}
+	\begin{rem}
+		Let $\chi \colon T \sto \C^{*}$ be a group homomorphism that is called a character of $T$. Then there is a unique $\lambda$ that is analytically integral  s.t.
+		\begin{equation*}
+			\chi(\exp H) = e^{\lambda(H)},~\forall~\exp H \in T = \exp \alg{t}
+		\end{equation*}
+	\end{rem}
+
+	\begin{defn}
+		Setting as above, for $\lambda,\mu \in (i\alg{t})^*$,
+		\begin{equation*}
+			\lambda \geqslant \mu ~\Leftrightarrow~ \mu - \lambda = \sum_{\alpha \in \Delta}k_{\alpha} \alpha \text{ with }k_{\alpha} \geqslant 0
+		\end{equation*}
+	\end{defn}
+
+	\begin{exam}
+		\begin{enumerate}
+			\item Let $G=GL(n,\C)$ and $K = U(n)$. Then let the maximal torus and the Cartan subalgebra be
+			\begin{equation*}
+				\begin{split}
+					T &= \bb{\diag\bc{e^{i\theta_1},\cdots,e^{i\theta_n}} \colon \theta_j \in \R}\\
+					\alg{t} &= \bb{\diag\bc{{i\theta_1},\cdots,{i\theta_n}} \colon \theta_j \in \R}\\
+					\alg{h} &= \bb{\diag\bc{{ z_1},\cdots,{ z_n}} \colon z_j \in \C}
+				\end{split}
+			\end{equation*}
+			with the root system
+			\begin{equation*}
+				R = \bb{\pm (\varepsilon_k-\varepsilon_j) \colon 1 \leqslant k < j \leqslant n}
+			\end{equation*}
+			where $\varepsilon_k(E_j) = \delta_{kj}$, where $E_j = \diag\bc{e_j}$, with the root space
+			\begin{equation*}
+				\alg{g}_{\varepsilon_k-\varepsilon_j} = \C E_{k,j}
+			\end{equation*}
+			and the coroot $h_{\varepsilon_k-\varepsilon_j}$ for root $\varepsilon_k-\varepsilon_j$ is
+			\begin{equation*}
+				h_{\varepsilon_k-\varepsilon_j} = E_k - E_j
+			\end{equation*}
+			The system of simple roots can be choosed as
+			\begin{equation*}
+				\Delta = \bb{\varepsilon_k-\varepsilon_{k+1} \colon 1\leqslant k \leqslant n-1}
+			\end{equation*}
+			and the corresponding positive Weyl chamber is
+			\begin{equation*}
+				\begin{split}
+					C(\Delta) &= \bb{\diag\bc{{\theta_1},\cdots,{\theta_n}} \colon \theta_k > \theta_{k+1},\theta_k \in \R} \\
+					\clo{C(\Delta)} &= \bb{\diag\bc{{\theta_1},\cdots,{\theta_n}} \colon \theta_k \geqslant \theta_{k+1}}
+				\end{split}
+			\end{equation*}
+			And the Weyl group $W \simeq \mathcal{S}_n$, the symmetry group. Since the orbit of $W$ intersects $\clo{C(\Delta)}$ with a single point and the action can be extended on $\alg{u}(n)^*$, for any $H \in \alg{u}(n)^* \simeq \Herm(n)$, let
+			\begin{equation*}
+			 	s(H)  = \spec(H) \defeq \diag\bc{\theta_1,\cdots,\theta_n} \in \clo{C(\Delta)}
+			\end{equation*} 
+			where $\theta_1\geqslant \cdots\geqslant \theta_n$ are all eigenvalues of $H$.
+
+			And the above mention is also true for $G = SL(n,\C)$ and $K = SU(n)$.
+			\item For a particular case $SL(3,\C)$ with $SU(3)$, the Cartan algebra $\alg{t} = \spn_{\R}\bb{iH_1,iH_2}$ and $\alg{h} = \spn_{\C}\bb{H_1,H_2}$, where
+			\begin{equation*}
+			 	H_1 = \bc{
+					\begin{array}{ccc}
+						1 & 0 & 0\\
+						0 & -1 &  0 \\
+						0 & 0 & 0
+					\end{array}
+				},H_2 = \bc{
+					\begin{array}{ccc}
+						0 & 0 & 0\\
+						0 & 1 &  0 \\
+						0 & 0 & -1
+					\end{array}
+				}
+			\end{equation*}
+			The root system is $R = \pm \bb{\alpha_1,\alpha_2,\alpha_3}$. After equipping with the trace inner product and viewing the root $\alpha = (\alpha(H_1),\alpha(H_2))$, then
+			\begin{equation*}
+				\alpha_1 = (2,-1),~\alpha_2 = (1,-2),~\alpha_3 = (1,1)
+			\end{equation*}
+			with the root space $\alg{g}_{\alpha_j} = \spn_{\C}X_j$ and $\alg{g}_{-\alpha_j} = \spn_{\C}Y_j$ for $j=1,2,3$, where
+			\begin{equation*}
+				\begin{split}
+					X_1 &= \bc{
+					\begin{array}{ccc}
+						0 & 1 & 0\\
+						0 & 0 & 0 \\
+						0 & 0 & 0
+					\end{array}
+				},~X_2 = \bc{
+					\begin{array}{ccc}
+						0 & 0 & 0\\
+						0 & 0 & 1 \\
+						0 & 0 & 0
+					\end{array}
+					},~X_3 = \bc{
+					\begin{array}{ccc}
+						0 & 0 & 1\\
+						0 & 0 & 0 \\
+						0 & 0 & 0
+					\end{array}
+					}, \\
+					Y_1 &= \bc{
+					\begin{array}{ccc}
+						0 & 0 & 0\\
+						1 & 0 &  0 \\
+						0 & 0 & 0
+					\end{array}
+				},~Y_2 = \bc{
+					\begin{array}{ccc}
+						0 & 0 & 0\\
+						0 & 0 &  0 \\
+						0 & 1 & 0
+					\end{array}
+					},~X_2 = \bc{
+					\begin{array}{ccc}
+						0 & 0 & 0\\
+						0 & 0 &  0 \\
+						1 & 0 & 0
+					\end{array}
+					}
+				\end{split}
+			\end{equation*}
+			\begin{center}
+				\includegraphics[scale=0.2]{1.eps}
+			\end{center}
+			If let $\Delta = \bb{\alpha_1,\alpha_2}$, then $C = C(\Delta)$ showed in above figure.
+		\end{enumerate}
+	\end{exam}
+
+	\subsection{Representations}
+
+	Let $K$ be a compact Lie group with Lie algebra $\alg{k}$. Let $(\Pi,V)$ be a finite-dimensional representation of $K$ i.e. $\Pi \colon K \sto GL(V)$ is a Lie group homomorphism. Then let $\pi \defeq T_e\Pi$ as a real linear map, 
+	\begin{center}
+		\begin{tikzcd}
+			K \arrow[r, "\Pi"]
+				& GL(V) \\
+			\alg{k} \arrow[ur, phantom, "\scalebox{1.5}{$\circlearrowleft$}" description] \arrow[u, "\exp"] \arrow[r, "\pi" below] & \End{V} \arrow[u, "e" right]
+		\end{tikzcd}
+		~~ $\Pi(\exp X) = e^{\pi(X)}$
+	\end{center}
+	And by the above theorem, $(\Pi,V)$ and $(\pi,V)$ can be extended to representations of $G = K_{\C}$ and $\alg{g} = \alg{k}_{\C}$. Let $\alg{t}$ be a Cartan subalgebra of $\alg{k}$ and $\alg{h} = \alg{t}_{\C}$. Let $\lambda \in \alg{h}^*$.
+	\begin{equation*}
+		V_{\lambda} = \bb{v \in V \colon \pi(H)v = \lambda(H)v,~\forall~H\in \alg{h}}
+	\end{equation*}
+	Similarly as the case of roots, after equipping $V$ with a $\Pi(K)$-invariant inner product, $\pi(H)$ is skew-symmetric for any $H \in \alg{t}$. Therefore, $\bb{\pi(H) \colon H \in \alg{h}}$ are simultaneously diagonalizable. So $V_{\lambda}$ is an eigenspace for some $\lambda$. 
+	\begin{defn}
+		For a representation $(\pi,V)$, $\lambda \in \alg{h}^*$ is called a weight if
+		\begin{equation*}
+			V_{\lambda} \neq \{0\}
+		\end{equation*}
+		Let $\Delta(V)$ be the set of all weights.
+	\end{defn}
+	\begin{rem}
+		Firstly, similar as roots, $\Delta(V) \subset (i\alg{t})^*$ and there is a weight space decomposition of $V$
+		\begin{equation*}
+			V = \bigoplus_{\lambda \in \Delta(V)}V_{\lambda}
+		\end{equation*}
+		Let $R$ be the root system with respect to $\alg{t}$. Then for any $\lambda  \in \Delta(V)$, $\lambda$ is algebraically integral i.e. $\lambda(h_{\alpha}) \in \Z$ for any $\alpha \in R$ by setting $\alg{sl}(2,\C)$ triples. Moreover, for any $\alpha \in R$ and $\beta \in \Delta(V)$, then
+		\begin{equation*}
+			\pi(\alg{g}_{\alpha})V_{\beta} = V_{\alpha + \beta}
+		\end{equation*}
+	\end{rem}
+
+	Let $R$ be the root system of $\alg{g}$ with a system of simple roots $\Delta$ and 
+	\begin{equation*}
+		\alg{n}^+ = \bigoplus_{\alpha \in R^+}\alg{g}_{\alpha},~\alg{n}^- = \bigoplus_{\alpha \in R^-}\alg{g}_{\alpha}
+	\end{equation*}
+	\begin{defn}
+		For a representation $(\pi,V)$, $\lambda_0 \in \Delta(V)$ is called a highest weight if
+		\begin{equation*}
+			\alg{n}^+V_{\lambda_0} = 0,\text{ that is equivalent to } \lambda_0+\alpha \notin \Delta(V),~\forall~\alpha \in R^+
+		\end{equation*}
+	\end{defn}
+
+	\begin{thm}
+		Let $G=K_{\C}$ be a reductive Lie group with Lie algebra $\alg{g} = \alg{k}_{\C}$. Let $\alg{t}$ be a Cartan subalgebra of $\alg{k}$ with the corresponding root system $R$ and choosing a system of simple roots $\Delta$. Let $(\pi,V)$ be an irreducible representation.
+		\begin{enumerate}
+			\item $V$ has a unique highest weight $\lambda_0$ with $\dim V_{\lambda_0} = 1$.
+			\item $\lambda_0$ is dominant.
+			\item With ordering defined on $(i\alg{t})^*$, $\mu \leqslant \lambda_0$ for all $\mu \in \Delta(V)$.
+			\item If $(\pi^{\prime},V^{\prime})$ is another irreducible representation with the same highest weight, then it is isomorphic to $(\pi,V)$.
+		\end{enumerate}
+	\end{thm}
+	\begin{rem}
+		In fact, for any algebraically integral and dominant $\lambda$, there is an irreducible representation $(\pi_{\lambda},V_{\lambda})$ with the highest weight $\lambda$.
+	\end{rem}
+
+	\begin{exam}[Representations of torus]
+		Let $G = (\C^*)^n$. By taking logarithm of complex numbers, it can see $\alg{g} = \C^n$. Clearly
+		\begin{equation*}
+			\alg{g} = (i\R)^n_{\C} ~\Rightarrow~ \alg{g} = \alg{k}_{\C},\text{ where }\alg{k} = \bb{(i\theta_1,\cdots,i\theta_n) \colon \theta_j \in \R}
+		\end{equation*}
+		By $K = (S^1)^n$ with the Lie algebra $\alg{k}$, $(\C^*)^n = (S^1)^n_{\C}$. Therefore, $(\C^*)^n$ is a reductive Lie group with Lie algebra $\C^n$. Let $(\pi,V)$ be a representation of $\C^n$ with the root system $R$.  And let the $(\Pi,V)$ be the corresponding representation of $(\C^*)^n$ and $\chi \colon (\C^*)^n \sto \C$  defined as $\chi(\exp t) = \exp \alpha(t)$ for $\alpha \in R$, the root space decomposition is
+		\begin{equation*}
+			V = \bigoplus_{\chi} V_{\chi}, \text{ where }V_{\chi} = \bb{v \in V \colon \Pi(\exp{t})v = \chi(\exp t) v,~\forall~t \in \C^n}
+		\end{equation*}
+		By above, for any such $\chi$,
+		\begin{equation*}
+			\chi(z_1,\cdots,z_n) = z_1^{k_1}\cdots z_n^{k_n}
+		\end{equation*}
+		for some $k_1,\cdots,k_n \in \Z$.	
+	\end{exam}
+
+	\begin{exam}[Representations of $\alg{sl}(2,\C)$]
+		Let $(\pi,V)$ be a representation of $\alg{sl}(2,\C)$. Since $\alg{h} = \spn_{\C}H$, any weight $\lambda \in \alg{h}^*$ can be viewed as $\lambda = \lambda(H) \in \C$. If $\lambda$ is a weight of $(\pi,V)$ with a $u \in V_{\lambda}$, then by above, $\pi(X)V_{\lambda} \subset V_{\lambda+2}$ with $\pi(X)u \in V_{\lambda+2}$. Since $V$ is finite-dimensional, there is a $N$ s.t. $\pi(X)^{N+1}u = 0$ and $\pi(X)^{N}u \neq 0$. Let
+		\begin{equation*}
+		 	u_0 = \pi(X)^{N}u,~\lambda_0 = \lambda + 2N
+		\end{equation*} 
+		In fact, $\lambda_0$ is a highest weight with highest weight vetor $u_0$. Then let $u_k = \pi(Y)^{k}u_0$. Similarly, there is a $m$ s.t. $u_m \neq 0$ and $u_{m+1} = 0$. Since $[X,Y] = H$, $\pi(H) = [\pi(X),\pi(Y)]$. So by induction,
+		\begin{equation*}
+			\pi(X)u_{k} = k\bc{\lambda_0 - (k-1)}u_{k-1},~k \geqslant 1
+		\end{equation*}
+		And 
+		\begin{equation*}
+			0 = \pi(X)u_{m+1} = (m+1)(\lambda_0-m)u_m,~\Rightarrow~ \lambda_0 = m
+		\end{equation*}
+		For vectors $\bb{u_0,u_1,\cdots,u_m}$,
+		\begin{equation*}
+			\begin{split}
+				\pi(H)u_k &= (m-2k)u_k \\
+				\pi(Y)u_k &= \left\{
+					\begin{array}{cc}
+						u_{k+1},& k< m \\
+						0,& k = m
+					\end{array}
+				\right. \\
+				\pi(X)u_k &= \left\{
+					\begin{array}{cc}
+						k\bc{m - (k-1)}u_{k-1},& k>0 \\
+						0,& k = 0
+					\end{array}
+				\right.
+			\end{split}
+		\end{equation*}
+		So $W = \spn\bb{u_0,u_1,\cdots,u_m}$ is invariant for $\pi$. Therefore, if $(\pi,V)$ is an irreducible representation, then $V = W$. This shows the irreducible representation is uniquely determined by a positive integer $m$, i.e. the highest weight. Conversely, for any positive integer $m$, there is an irreducible representation $(\pi,V)$ with the highest weight $m$ by constructing $\bb{u_0,u_1,\cdots,u_m}$. If $k \in \Z$ is a weight of $\pi$ so are
+		\begin{equation*}
+			-\abs{k},-\abs{k}+2,\cdots,\abs{k}-2,\abs{k}
+		\end{equation*}
+	\end{exam}
+
+	\sectionbreak
+	\section{Symplectic Manifolds and Moment Map}
+
+	\subsection{Symplectic Manifolds}
+
+	Let $V$ be a finite-dimensional $\R$-vector space. A bilinear form $\omega \colon V \times V \sto \R$ is called skew-symmetric if  
+	\begin{equation*}
+		\omega(u,v) =  -\omega(v,u),~\forall~u,v \in V
+	\end{equation*}
+	If choosing an appropriate basis $\mathcal{B}=\bb{u_1,\cdots,u_k,e_1,\cdots,e_n,f_1,\cdots,f_n}$, then the matrix expression of $\omega$ is 
+	\begin{equation*}
+		\omega(u,v) = [u]_{\mathcal{B}}^T \bc{\begin{array}{ccc}
+			O & O & O \\
+			O & O & id \\
+			O & -id & O
+		\end{array}}[v]_{\mathcal{B}}
+	\end{equation*}
+	Let $\ker \omega  = \bb{u\in V \colon \omega(u,v) = 0,~\forall~v \in V} = \spn\bb{u_1,\cdots,u_k}$. If $\ker \omega = \bb{0}$, then $\omega$ is called a symplectic form and $(V,\omega)$ is called a symplectic vector space. And then 
+	\begin{center}
+		\begin{tabular}{l c c l}
+			$\omega^b \colon$ & $V$ & $\longrightarrow$ & $V^{*}$ \\
+			~ & $v$ & $\longmapsto$ & $\omega(v,\cdot)$
+		\end{tabular}
+	\end{center}
+	is an isomorphism. 
+
+	Let $(V,\omega)$ be a symplectic vector space. A complex structure $J \colon V \sto V$ is compatible with $\omega$ if 
+	\begin{equation*}
+		g(u,v) \defeq \omega(u,Jv),~\forall~u,v \in V
+	\end{equation*}
+	is an inner product. And then
+	\begin{equation*}
+		J^*\omega(u,v) = \omega(Ju,Jv) = g(Ju,v) = g(v,Ju) = \omega(v,-u)  = \omega(u,v)
+	\end{equation*}
+	In fact, any two of $g,\omega$ and $J$ can induce the left compatible structure.
+
+	\begin{defn}
+		Let $M$ be a smooth manifold and $\omega \in \Omega^2(M)$ be a $2$-form. $\omega$ is called a symplectic form if $\omega$ is closed i.e. $d\omega = 0$ and $\omega_m$ is symplectic for any $m \in M$. Then $(M,\omega)$ is called a symplectic manifold.
+	\end{defn}
+
+	\begin{exam}[Cotangent Bundles]
+		Let $N$  be a smooth manifold with dimension $n$ and $M = T^*N$ be the cotangent bundle with the projection map
+		\begin{center}
+			\begin{tabular}{l c c l}
+				$\pi \colon$ & $T^*N$ & $\longrightarrow$ & $N$ \\
+				~ & $p=(x,\xi_x)$ & $\longmapsto$ & $x$
+			\end{tabular}
+		\end{center}
+		The tautological $1$-form $\tau \in T^*M$ is defined as
+		\begin{equation*}
+			\tau_p \defeq T_p\pi^*\xi_x, \text{ i.e. } \inn{\tau_p,v} = \inn{\xi_x,T_p\pi (v)},~\forall~v \in T_pM
+		\end{equation*}
+		In fact, for any $1$-form $\alpha \in T^*N$, $\alpha$ can be viewed as $\alpha \colon N \sto T^*N$ by $x \mapsto q=(x,\alpha_x)$. Then for any $v \in T_xN$,
+		\begin{equation*}
+			\inn{(\alpha^*\tau)_x,v} = \inn{\tau_q, T_x\alpha(v)} = \inn{\alpha_x,v}~\Rightarrow~ \alpha^*\tau = \alpha
+		\end{equation*}
+		Conversely, the $\tau$ satisfying this property is unique. Define the canonical $2$-form $\omega = -d\tau$ on $M  = T^*N$. Locally, let $(q_1,\cdots,q_n)$ be a coordinate on an open neighborhood of $N$. Let $p_k$ be the dual coordinate in $T^*N$. Then $(q_1,\cdots,q_n,p_1,\cdots,p_n)$ is a coordinate of $M$. It can see
+		\begin{equation*}
+			\tau = \sum_{k=1}^n p_k dq_k ~\Rightarrow~ \omega = \sum_{k=1}^n dq_k \wedge dp_k
+		\end{equation*}
+		Therefore, $(M,\omega)$ is a symplectic manifold.
+	\end{exam}
+	\begin{rem}
+		\begin{enumerate}
+			\item A special case is $\C^n$. For $z_k = x_k +iy_k$, $\C^n \simeq T^*\R^n$ and the canonical symplectic form 
+			\begin{equation*}
+				\omega = \sum_{k=1}^n dx_k \wedge dy_k
+			\end{equation*}
+			Moreover, by Darboux's theorem, any symplectic manifold is locally symplectomorphic to this structure.
+			\item Let $\C^n$ equipped with the standard inner product $H$.
+			\begin{equation*}
+				\begin{split}
+					H&= \sum_{k=1}^ndz_k \otimes d\clo{z}_k \\
+					&= \sum_{k=1}^n (dx_k +idy_k) \otimes (dx_k -idy_k) \\
+					&= \sum_{k=1}^n \bc{dx_k \otimes dx_k+ dy_k \otimes dy_k} + i \bc{dy_k \otimes dx_k - dx_k \otimes dy_k} \\
+					&=\Rea H - i \omega
+				\end{split}
+			\end{equation*}
+			Therefore, $\omega = -\Img H$. In general case, if $V$ is a complex vector space with an inner product $H$, then $\omega = -\Img H$ is a symplectic form on $V$. 
+		\end{enumerate}
+	\end{rem}
+
+	\begin{exam}[Coadjoint Orbits]
+		Considering the coadjoint action of a Lie group $G$ on $\alg{g}^*$, the orbit space of $\xi \in \alg{g}^*$ is
+		\begin{equation*}
+			M_{\xi} = G \cdot \xi \simeq G / G_{\xi}
+		\end{equation*}
+		Firstly, for $X,Y \in \alg{g}$, let
+		\begin{equation*}
+			\omega_{\xi}(X,Y) \defeq \inn{\xi,[X,Y]} = \inn{-\ad^{*}_X \xi, Y}
+		\end{equation*}
+		Since
+		\begin{equation*}
+			\begin{split}
+				\ker \omega_{\xi} &= \bb{X \in \alg{g} \colon \inn{-\ad^{*}_X \xi, Y} = 0,~\forall~Y \in \xi} \\
+				&= \bb{X \in \alg{g} \colon \ad^{*}_X = 0} \\
+				&= \alg{g}_{\xi} 
+			\end{split}
+		\end{equation*}
+		the induced form of $\omega_{\xi}$ also denoted by $\omega_{\xi}$ is nondegenerate on $\alg{g}/\alg{g}_{\xi}$. Therefore, $\omega_{\xi}$ is nondegenerate on $T_{\xi}M_{\xi} \simeq \alg{g}/\alg{g}_{\xi}$. Applying the isomorphism $G \sto G$ by $h \sto ghg^{-1}$, $G/G_{g\cdot \xi} \simeq G / G_{\xi}$. Therefore, $T_{g \cdot \xi}M_{\xi} \simeq \alg{g}/\alg{g}_{\xi}$. And thus, $\omega$ is well-defined on $TM_{\xi}$ and nondegenerate everywhere. More explicitly, for any $X_{g \cdot \xi},Y_{g \cdot \xi} \in T_{g \cdot \xi}M_{\xi}$,
+		\begin{equation*}
+			\omega_{g \cdot \xi}\bc{X_{g \cdot \xi},Y_{g \cdot \xi}} \defeq \inn{g\cdot \xi,[X,Y]}
+		\end{equation*}
+		The closedness of $\omega$ is by applying the global formulas for the Lie and exterior derivatives. So $(M_{\xi},\omega)$ is a symplectic manifold.
+	\end{exam}
+
+	On a smooth manifold $M$, a symplectic form $\omega$ and an almost complex structure $J$ are compatible if 
+	\begin{equation*}
+		g_m(X,Y) = \omega_m(X,JY),~\forall~X,Y \in T_mM
+	\end{equation*}
+	is defined as a Riemannian metric on $M$. If $(M,\omega)$ is a symplectic manifold, then there is a compatible almost complex structure $J$ on $M$ because the Riemannian metric always exists. 
+	\begin{defn}
+		A K\"ahler manifold $(M,\omega,J)$ is a complex manifold with a compatible symplectic form. Then $\omega$ is called a K\"ahler form.
+	\end{defn}
+	If $(M,\omega,J)$ is a K\"ahler manifold and locally
+	\begin{equation*}
+		\omega = \sum_{k<j} a_{kj}dz_k\wedge dz_j + b_{kj}dz_k\wedge d\clo{z}_j + c_{kj}d\clo{z}_k\wedge d\clo{z}_j
+	\end{equation*}
+	then by $J^*\omega = \omega$ and $J^*dz = idz,J^*d\clo{z} = -id\clo{z}$,
+	\begin{equation*}
+		\omega = \frac{i}{2} \sum_{k,j=1}^n h_{kj} dz_k\wedge d\clo{z}_j
+	\end{equation*}
+	And by the properties of $\omega$, it can see $H=(h_{kj})$ is Hermitian and positive definite. This property can be applied to define the K\"ahler form on a complex manifold. 
+
+	Firstly, for a complex manifold $M$, $f \in C^{\infty}(M,\R)$ is called strictly plurisubharmonic (spsh) if locally, $\bc{\frac{\partial^2 f}{\partial z_k \partial \clo{z}_j}}$ is positive definite.
+	\begin{thm}
+		Let $M$ be a complex manifold and $f \in C^{\infty}(M,\R)$. $f$ is spsh if and only if 
+		\begin{equation*}
+			\omega = \frac{i}{2}\partial \clo{\partial} f
+		\end{equation*}
+		is a K\"ahler form.
+	\end{thm}
+
+	\begin{exam}
+		For $M = \C^n$ complex manifold, let $f(z) = \abs{z}^2 = \sum_k z_k\clo{z}_k$. Then
+		\begin{equation*}
+			\frac{\partial^2 f}{\partial z_k \partial \clo{z}_j} = \delta_{kj}
+		\end{equation*}
+		that is spsh. And
+		\begin{equation*}
+			\begin{split}
+				\frac{i}{2}\partial \clo{\partial} f &= \frac{i}{2} \partial \sum_k z_kd\clo{z}_k = \frac{i}{2} \sum_k dz_k \wedge d\clo{z}_k \\
+				&= \sum_k dx_k \wedge dy_k \\
+				&= \omega
+			\end{split}
+		\end{equation*}
+	\end{exam}
+
+	\subsection{Hamiltonian Action and Moment Map}
+
+	Let $(M,\omega)$ be a symplectic manifold. For a smooth function $f \colon M \sto \R$, define $X_f \in \V(M)$ as $X_f = \bc{\omega^b}^{-1}(df)$, and so
+	\begin{equation*}
+		df = \omega^b(X_f) = \omega(X_f,\cdot) = \imath_{X_f}\omega
+	\end{equation*}
+	where $\imath_{X_f}$ is the contraction map. Then $X_f$ is called a Hamiltonian vector field. Let
+	\begin{equation*}
+		\V_{Ham}(M) = \bb{X \in \V(M) \colon \exists~f \in C^{\infty}(M),~X = X_f}
+	\end{equation*}
+	For any Hamiltonian vector field $X_f$,
+	\begin{equation*}
+		\mathcal{L}_{X_f}f = df(X_f) = \omega(X_f,X_f) = 0
+	\end{equation*}
+	which means $f$ is perserved along $X_f$ and by the Cartan's formula,
+	\begin{equation*}
+		\mathcal{L}_{X_f}\omega =  \imath_{X_f} d \omega + d  \imath_{X_f} \omega = 0
+	\end{equation*}
+	which means $\omega$ is also preserved along $X_f$.
+	
+	\begin{exam}
+		Let $M = T^*\R^n$ with the coordinate $(q_1,\cdots.q_n,p_1,\cdots,p_n)$ and the canonical symplectic form $\omega = \sum_k dq_k \wedge dp_k$ be the configuration space. Let $q_k(t)$ be the position coordinates and $p_k(t) = \dot{q}_k(t)$ be the moment coordinate. Let $H \colon T^*\R^n \sto \R$  be the energy function
+		\begin{equation*}
+		 	H(q,p) = \frac{1}{2}\abs{p}^2 + V(q)
+		\end{equation*}
+		where $V(q)$ is the potential function. Then the corresponding Hamiltonian vector field
+		\begin{equation*}
+			X_H  = \sum_{k=1}^n \frac{\partial H}{\partial p_k}\frac{\partial }{\partial q_k} - \frac{\partial H}{\partial q_k}\frac{\partial }{\partial p_k}
+		\end{equation*}
+		Therefore, the flow of $X_H$ satisfies
+		\begin{equation*}
+			\dot{q}_k(t) = \frac{\partial H}{\partial p_k} = p_k(t),~\dot{p}_k(t) = -\frac{\partial H}{\partial q_k} = -\frac{\partial V}{\partial q_k}
+		\end{equation*}
+		Therefore, it is the Newton's second law
+		\begin{equation*}
+			\ddot{q}(t) = -\nabla V
+		\end{equation*}
+		i.e. the energy is preserved along the flow.
+	\end{exam}
+
+	Let $G$ be a Lie group and $(M,\omega)$ be a symplectic manifold. The Lie group action $G\curvearrowright M$ is called symplectic if $\tau(g)$ is symplectomorphic, i.e. $\tau(g)^*\omega = \omega$, for any $g \in G$, where $\tau\colon G \sto \Diff(M)$.
+
+	\begin{defn}
+		Let a Lie group action of $G \curvearrowright (M,\omega)$ be symplectic. This action is called a Hamiltonian action if there is a smooth function
+		\begin{equation*}
+			\mu \colon M \longrightarrow \alg{g}^*
+		\end{equation*}
+		\begin{enumerate}
+			\item $\mu$ is $G$-equivariant i.e. $\mu\bc{g \cdot m} = \Ad_g^*\mu(m),~\forall~r \in G,m\in M$
+			\item for all $X \in \alg{g}$,
+			\begin{equation*}
+				d\mu_X = \imath_{X_M}\omega
+			\end{equation*}
+			where $\mu_X  \colon M \sto \R$ defined as $\mu_X(m) = \inn{\mu(m),X}$.
+		\end{enumerate}
+		Then $(G \curvearrowright M, \omega,\mu)$ is called a Hamiltonian $G$-space.
+	\end{defn}
+	\begin{rem}
+		\begin{enumerate}
+			\item It is called Hamiltonian because for any $X \in \alg{g}$, $X_M \in \V_{Ham}(M)$.
+			\item If  $\mu$ and $\nu$ are two moment maps for the same Hamiltonian action, then
+			\begin{equation*}
+				d(\mu_X-\nu_X) = 0,~\forall~X\in \alg{g} 
+			\end{equation*}
+			So $\mu_X-\nu_X = \xi_X$ where $\xi_X$ is a constant function on $M$. Moreover, $\xi \colon \alg{g} \sto \R$ is linear. So $\xi \in \alg{g}^*$. Then $\mu - \nu = \xi$ and by equivariance of the moment map,  $\xi$ is fixed by the coadjoint action.
+		\end{enumerate}
+	\end{rem}
+
+	\begin{exam}[Operations]
+		\begin{enumerate}
+			\item Let $(G \curvearrowright M_1,\omega_1,\mu_1)$ and $(G \curvearrowright M_2,\omega_2,\mu_2)$ be two Hamiltonian $G$-spaces. Then there is a canonical symplectic form $\omega_1 \times \omega_2$ on $M_1 \times M_2$ defined as
+			\begin{equation*}
+				\omega_1 \times \omega_2  = \pi_1^*\omega_1+\pi_2^*\omega_2
+			\end{equation*}
+			where $\pi_j \colon M_1 \times M_2 \sto M_j$ is the projection. Moreover, after considering $G\curvearrowright M_1 \times M_2$ as
+			\begin{equation*}
+				g \cdot (m_1,m_2) \defeq (g \cdot m_1,g \cdot m_2)
+			\end{equation*}
+			This action is Hamiltonian with the moment map defined as
+			\begin{equation*}
+				\mu_1 \times  \mu_2 (m_1,m_2) \defeq \mu_1(m_1) +  \mu_2(m_2)
+			\end{equation*}
+
+			\item Let $M$ be a symplectic manifold. Suppose the actions of $G_1$ and $G_2$ on $M$ are Hamiltonian with moment maps $\mu_1$ and $\mu_2$ respectively and are commutative. Then $G_1 \times G_2$ acts $M$ is Hamiltonian with the moment map
+			\begin{center}
+				\begin{tikzcd}
+					\mu_1\oplus \mu_2 \colon M \arrow[r] & \alg{g}_1^* \oplus \alg{g}_2^*
+				\end{tikzcd}
+			\end{center}
+
+			\item Let $(G \curvearrowright M,\omega,\mu)$ be a Hamiltonian $G$-space. Suppose $H$ is Lie subgroup of $G$ with Lie algebra $\alg{h}$ and the inclusion map $i \colon \alg{h} \hookrightarrow \alg{g}$. Then $H$ acting on $M$ is also Hamiltonian and the moment map is
+			\begin{center}
+				\begin{tikzcd}
+					\mu^{\prime} \colon M \arrow[r, "\mu"] & \alg{g}^* \arrow[r, "i^*"] & \alg{h}^*
+				\end{tikzcd}
+			\end{center}
+			where $i^* \colon \alg{g}^* \sto \alg{h}^*$ be the dual map of $i$.
+
+			\item Let $(G \curvearrowright M,\omega,\mu)$ be a Hamiltonian $G$-space and $N \subset M$ be a submanifold s.t. $G$  acts $N$ is invariant and $i^*\omega$ is a symplectic form on $N$, where $i \colon N \hookrightarrow M$. Then action of $G$ on $N$ is Hamiltonian with the moment map $\mu^{\prime}$ defined as
+			\begin{center}
+				\begin{tikzcd}
+					\mu^{\prime} \colon N \arrow[r, "i"] & M \arrow[r, "\mu"] & \alg{g}^*
+				\end{tikzcd}
+			\end{center}
+		\end{enumerate}
+	\end{exam}
+
+	\begin{exam}[Cotangent Bundles]
+		Let $N$ be a smooth manifold and $M = T^*N$ with the canonical symplectic form $\omega$. Suppose there is a Lie group action of $G$ on $N$. The induced action of $G$ on $M$ is defined as
+		\begin{equation*}
+			g \cdot (n,\eta) \defeq \bc{g \cdot n,\bc{T_ng^{-1}}^*\eta},~\forall~\eta \in T_n^*N
+		\end{equation*}
+		Then this action is Hamiltonian with the moment map
+		\begin{equation*}
+			\mu_X = \imath_{X_M} \tau,\text{ i.e. }  \inn{\mu(p),X} = \inn{\eta,T_p\pi(X_M(p))},~p =(n,\eta) \in M 
+		\end{equation*}
+		where $\tau$ is the tautological $1$-form and $\pi  \colon T^*N \sto N$. 
+		\begin{proof}
+			Let $p = (n,\eta) \in M $. By definiton, $\pi (g \cdot p) = g \cdot \pi(p)$. Therefore,
+			\begin{equation*}
+				T_{g \cdot p} \circ T_pg = T_ng \circ T_p\pi,~T_pg^* \circ T_{g \cdot p}^* = T_p\pi^* \circ T_ng^*
+			\end{equation*}
+			
+			Since $\tau$ is the tautological $1$-form, $\tau_p = T_p\pi^*\eta$. So
+			\begin{equation*}
+				(g^*\tau)_p = T_pg^* \tau_{g \cdot p} = T_pg^*  T_{g \cdot p}\pi^* \bc{T_ng^{-1}}^*\eta = T_{p}\pi^*\eta = \tau_p
+			\end{equation*}
+			Therefore, $\tau$ is invariant for this action. Then by definition, $\mathcal{L}_{X_M}\tau = 0$. And by Cartan's formular,
+			\begin{equation*}
+				\mathcal{L}_{X_M}\tau =  d\imath_{X_M}\tau + \imath_{X_M}\tau~\Rightarrow~ d\mu_X = \imath_{X_M}\omega
+			\end{equation*}
+			For the equivariance, since
+			\begin{equation*}
+				\begin{split}
+					\bc{\Ad_{g^{-1}}X}_M(p) &= \left.\frac{d}{dt}\right\lvert_{t=0} \exp\bc{t\Ad_{g^{-1}}X}\cdot p \\ 
+					&= \left.\frac{d}{dt}\right\lvert_{t=0} g^{-1}\exp\bc{tX}g\cdot p \\
+					&=  T_pg^{-1}X_M(g\cdot p)
+				\end{split}
+			\end{equation*}
+			\begin{equation*}
+				\begin{split}
+					\inn{\mu(g \cdot p),X} &= \inn{\bc{T_ng^{-1}}^*\eta,T_{g \cdot p}\pi X_M(g \cdot p)} \\
+					&= \inn{\eta,T_ng^{-1}T_{g \cdot p}\pi X_M(g \cdot p)} \\
+					&= \inn{\eta,T_{p}\pi T_pg^{-1} X_M(g \cdot p)} \\
+					&= \inn{\eta,T_{p}\pi \bc{\Ad_{g^{-1}}X}_M(p)} \\
+					&= \inn{\mu(p),\Ad_{g^{-1}}X} \\
+					&= \inn{\Ad^*_{g}\mu(p),X}
+				\end{split}
+			\end{equation*}
+			Thus, $\mu(g \cdot p) = \Ad_g^*\mu(p)$.
+		\end{proof}
+	\end{exam}
+
+	\begin{exam}[Coadjoint Orbits]
+		Considering the coadjoint action of a Lie group $G$ on $\alg{g}^*$, the orbit space $G\cdot{\xi}$ of $\xi \in \alg{g}^*$ can be equipped with a symplectic form $\omega$. Then the coadjoint action of $G$ on $G\cdot{\xi}$ is Hamiltonian with the moment map $\mu$ that is the inclusion
+		\begin{center}
+			\begin{tikzcd}
+				\mu \colon G\cdot{\xi} \arrow[r, hookrightarrow] & \alg{g}^* 
+			\end{tikzcd}
+		\end{center}
+		\begin{proof}
+			Firstly, for $g \cdot \xi \in G \cdot \xi$ and $h \in G$,
+			\begin{equation*}
+				\mu(h\cdot(g \cdot \xi)) = h \cdot (g \cdot \xi) =  h \cdot \mu(g \cdot \xi)
+			\end{equation*}
+			So it is clearly $G$-equivariant. And for $X,Y \in \alg{g}$
+			\begin{equation*}
+				\begin{split}
+					\inn{(d\mu_X)_{g \cdot \xi},Y_{g \cdot \xi}} &= \left.\frac{d}{dt}\right\lvert_{t=0}\mu_X\bc{\exp{tY}\cdot g \cdot \xi} \\
+					&= \left.\frac{d}{dt}\right\lvert_{t=0} \inn{g \cdot \xi, \Ad_{\exp{(-tY)}}X} \\
+					&= \inn{g \cdot \xi,[X,Y]} \\
+					&= \omega_{g\cdot \xi}(X_{g \cdot \xi},Y_{g \cdot \xi})
+				\end{split}
+			\end{equation*}
+		Therefore, $d\mu_X = \imath_{X_M}\omega$.
+		\end{proof}		
+	\end{exam}
+
+	\begin{exam}[Vector Spaces]
+		Let $M = \C^n$ with the standard inner product $H$. By above, the canonical symplectic form is given by
+		\begin{equation*}
+			\omega = - \Img H
+		\end{equation*}
+		Let $K = U(n)$ be the Lie group acting on $M$ naturally. This action is Hamiltonian with the moment map $\mu \colon M \sto \alg{k}^*$ defined as
+		\begin{equation*}
+			\mu_X(z) = \inn{\mu(z),X} \defeq \frac{iH(Xz,z)}{2}
+		\end{equation*}
+		where $\alg{k} = \alg{u}(n)$ acts on $M$ naturally.
+		\begin{proof}
+			For any $X \in \alg{k}$ and $\xi \in T_zM = \C^n$,
+			\begin{equation*}
+				\begin{split}
+					\inn{(d\mu_X)_z,\xi} &= \left.\frac{d}{dt}\right\lvert_{t=0} \mu_X\bc{\exp(t\xi)\cdot z} \\
+					&= \frac{i}{2}\left.\frac{d}{dt}\right\lvert_{t=0} H\bc{X\exp(t\xi)z,\exp(t\xi)z} \\
+					&=	\frac{i}{2} \bc{H(X\xi,z)+H(Xz,\xi)}
+				\end{split}
+			\end{equation*}
+			Firstly, $X \in \alg{k} = \alg{u}(n)$ so $X^{\dagger} = -X$.
+			\begin{equation*}
+				H(X\xi,z) = -H(\xi,Xz) = -\clo{H(Xz,\xi)}
+			\end{equation*}
+			Therefore,
+			\begin{equation*}
+				\begin{split}
+					\inn{(d\mu_X)_z,\xi} &= \frac{i}{2}\bc{H(Xz,\xi)-\clo{H(Xz,\xi)}} \\
+					&=-\Img H(Xz,\xi) \\
+					&= \omega(Xz,\xi)
+				\end{split}
+			\end{equation*}
+			And since $K$ acts $M$ linearly,
+			\begin{equation*}
+				X_M(z) = \left.\frac{d}{dt}\right\lvert_{t=0} \exp(tX)\cdot z = \bc{\left.\frac{d}{dt}\right\lvert_{t=0} \exp(tX)}z = Xz
+			\end{equation*}
+			So $\inn{(d\mu_X)_z,\xi} = \omega(X_M(z),\xi)$ that is $d \mu_X = \imath_{X_M}\omega$. For the equivariance, let $A \in K$,
+			\begin{equation*}
+				\begin{split}
+					\inn{\mu(Az),X} &= \frac{iH(XAz,Az)}{2} \\
+					&= \frac{iH(A^{-1}XAz,z)}{2} \\
+					&= \inn{\mu(z),\Ad_{A^{-1}}X} \\
+					&= \inn{\Ad_A^*\mu(z),X} \qedhere
+				\end{split}
+			\end{equation*}
+		\end{proof}
+	\end{exam}
+	\begin{rem}
+		In the general case, let $M = V$ be a complex vector space and $K$ be a compact Lie group. And $K$ acts on $V$ linearly i.e. there is Lie group homomorphism
+		\begin{equation*}
+			\Pi \colon K \sto GL(V)
+		\end{equation*}
+		and inducing a Lie group homomorphism
+		\begin{equation*}
+			\pi \colon \alg{k} \sto \End(V)
+		\end{equation*}
+		where $\pi  = T_e\Pi$. And $\Pi\circ \exp = \exp \circ \pi$. Moreover, there is a $K$-invariant inner product $H$ on $V$ i.e.
+		\begin{equation*}
+			H(\Pi(k)v,\Pi(k)w) = H(v,w),~H\bc{\pi(X)v,w} = -H\bc{v,\pi(X)w}
+		\end{equation*}
+		So $\Pi(K) \subset U(n)$ and $\pi(\alg{k}) \subset \alg{u}(n)$. Therefore, when $V$ is equipped with then canonical symplectic form $\omega = -\Img H$, then the action of $K$ on $V$ is Hamiltonian with the moment map
+		\begin{equation*}
+			\mu_X(v) = \inn{\mu(v),X} \defeq \frac{iH(\pi(X)v,v)}{2},~\forall~X\in \alg{k},v\in V
+		\end{equation*}
+	\end{rem}
+
+	\subsection{Symplectic Reduction and Projective Space}
+	
+	Let $(M,\omega)$ be a symplectic manifold and the action of $G$ on $M$ be Hamiltonian with the moment map $\mu \colon M \sto \alg{g}^*$. A point $m \in M$ of $\mu$ is called regular if
+	\begin{center}
+		\begin{tikzcd}
+			T_m\mu \colon T_mM \arrow[r] & \alg{g}^* 
+		\end{tikzcd}
+	\end{center}
+	is surjective. And an element $\xi \in \alg{g}^*$ is called a regular value if any point in $\mu^{-1}(\xi)$ is regular.
+	\begin{prop}
+		A point $m \in M$ is regular if and only if $\alg{g}_m = 0$.
+	\end{prop}
+	\begin{proof}
+		Firstly, $\alg{g}_m = \bb{X \in \alg{g} \colon X_M(m) = 0} = 0$ if and only is
+		\begin{equation*}
+			X_M(m) = 0 ~\Rightarrow~ X=0 \tag{$*$}
+		\end{equation*}
+		Since $\omega$ is nondegenerate, $X_M(m) = 0$ if and only if
+		\begin{equation*}
+			\omega(X_M(m),v) = 0~\forall~v \in T_mM ~\Leftrightarrow~ \bc{d\mu_X}_m = 0
+		\end{equation*}
+		Let $i_X \colon \alg{g}^* \sto \R$ by $i_X(\xi) = \inn{\xi,X}$. Then
+		\begin{equation*}
+			\bc{d\mu_X}_m = (d(i_X\circ \mu))_m = i_X  \circ T_m\mu
+		\end{equation*}
+		So $\bc{d\mu_X}_m = 0$ if and only if $\Img T_m\mu \subset \ker i_X$. Therefore, $(*)$ is true if and only if $T_m\mu$ is surjective.
+	\end{proof}
+
+	Then it can consider the quotient symplectic space by applying the moment map.
+	\begin{thm}[Marsden-Weinstein-Meyer]
+		$(M,\omega)$ is a connected symplectic manifold and $G$ is a Lie group and the action of $G$ on $M$ is Hamiltonian with a moment map $\mu \colon M \sto \alg{g}^*$. Let $\xi  \in \alg{g}^*$ be a regular value of $\mu$ and $G$ act $\alg{g}^*$ by adjoint action. Suppose the restricted action of $G_{\xi}$ on $\mu^{-1}(\xi)$ is proper and free so that
+		\begin{equation*}
+			M^{\xi} = \mu^{-1}(\xi) / G_{\xi}
+		\end{equation*}
+		is a smooth manifold. Then there is a unique symplectic manifold $\omega^{\xi}$ s.t.
+		\begin{equation*}
+			\pi^*\omega^{\xi}  =  i^*\omega
+		\end{equation*}
+		where $\pi \colon \mu^{-1}(\xi) \sto M^{\xi}$ projection and $i \colon \mu^{-1}(\xi) \hookrightarrow M$ inclustion.
+	\end{thm}
+	\begin{rem}
+		$(M^{\xi},\omega^{\xi})$ is called the symplectic reduction of the Hamiltonian action at $\xi$. In particular, if $0\in \alg{g}^*$ satisfies the above conditions, then because $G_0  = G$,
+		\begin{equation*}
+		 	M \dslash G = \mu^{-1}(0) / G
+		\end{equation*}
+		In fact, the general case can be induced from this by applying the shifting trick.
+	\end{rem}
+
+	Moreover, on the reduction space, it can also consider the Hamiltonian action. Suppose a Lie group $G$ acts on a symplectic manifold $(M,\omega)$ and this action is Hamiltonian with the moment map $\mu \colon M \sto \alg{g}^*$. Let $\tilde{H}$ be a closed subgroup of $G$ s.t. the restricted actions of $\tilde{H}$ on $M$ is commutative with the action of $G$ on $M$. By above example, the action of $\tilde{H}$ on $M$ is also Hamiltonian with the moment map
+	\begin{center}
+		\begin{tikzcd}
+			\tilde{\mu} \colon M \arrow[r, "\mu"] & \alg{g}^* \arrow[r, "\tilde{i}^*"] & \tilde{\alg{h}}^*
+		\end{tikzcd}
+	\end{center}
+	where $\tilde{i} \colon \alg{g} \hookrightarrow \tilde{\alg{h}}$ is the inclusion. Let $\xi \in \tilde{\alg{h}}^*$ be a regular value of $\tilde{\mu}$, which satisfies the above condition. Then considering the symplectic reduction of $\tilde{\mu}$ at $\xi$, let
+	\begin{equation*}
+		\tilde{M}^{\xi} = \tilde{\mu}^{-1}(\xi) / \tilde{H}_{\xi}
+	\end{equation*}
+	Assume $\tilde{\mu}^{-1}(\xi)$  is $G$-invariant. It can induce the action of $G$ on $\tilde{\mu}^{-1}(\xi)$. Because the action of $\tilde{H}$ on $M$ is commutative with the action of $G$ on $M$,
+	\begin{equation*}
+		[g \cdot h \cdot m] = [g \cdot m],~\forall~g \in G,h\in \tilde{H},m\in M
+	\end{equation*}
+	the induced action of $G$ on $\tilde{M}^{\xi}$ is well-defined. Moreover, this action is also Hamiltonian with the moment map ${\mu}^{\prime} \colon \tilde{M}^{\xi} \sto \alg{g}^*$ induced by
+	\begin{center}
+		\begin{tikzcd}
+			\tilde{\mu}^{-1}(\xi) \arrow[r, hook,"\iota"] & M \arrow[r, "\mu"] & \alg{g}^*
+		\end{tikzcd}
+	\end{center}
+	
+	Now, considering a special case, let $M = \C^n$ with the standard inner product $H$. Thus, $(M,\omega = -\Img H)$ is a symplectic manifold. And let $G = U(n)$ acting on $M$. By above, it is a Hamiltonian action with the moment map
+	\begin{equation*}
+	 	\inn{\mu(z),X} = \frac{iH(Xz,z)}{2}
+	\end{equation*} 
+	Let
+	\begin{equation*}
+		U(1) = \bb{z \in \C \colon \abs{z} = 1} \simeq \bb{zI_n \colon \abs{z} = 1} \subset U(n)
+	\end{equation*}
+	be a subgroup of $U(n)$ and the Lie algebra $\alg{u}(1) \simeq i\R$ and an element $1^{*} \in \alg{u}(1)^*$ defined as
+	\begin{equation*}
+		\inn{1^*,i} \defeq 1
+	\end{equation*}
+	Let $U(1)=\tilde{H}$ acting on $M$ with the induced moment map $\tilde{\mu}$. Considering $\tilde{\mu}^{-1}(-1^*)$, let $z \in \tilde{\mu}^{-1}(-1^*)$, for any $X = it \in \alg{u}(1) = i\R$,
+	\begin{equation*}
+		\inn{\tilde{\mu}(X),z} = \frac{iH(Xz,z)}{2} = \frac{-tH(z,z)}{2} = \inn{-1^*,X} = -t
+	\end{equation*}
+	So
+	\begin{equation*}
+		\tilde{\mu}^{-1}(-1^*) = \bb{z \in M \colon H(z,z) = 2}
+	\end{equation*}
+	Then for any  $z \in \tilde{\mu}^{-1}(-1^*)$, then $z \neq 0$ and thus
+	\begin{equation*}
+		U(1)_z = \{I\}~\Rightarrow~ \alg{u}(1)_z = 0
+	\end{equation*}
+	Therefore, by the above proposition, any $z\in \tilde{\mu}^{-1}(-1^*)$ is regular, i.e. $-1^*$ is a regular value. And since
+	\begin{equation*}
+		\inn{\Ad_{z}^*(-1^*),it}  = \inn{-1^*,\Ad_{z^{-1}}it} = \inn{-1^*,it}
+	\end{equation*}
+	$U(1)_{-1^*}  =  U(1)$. Then it can see
+	\begin{equation*}
+		\tilde{\mu}^{-1}(-1^*) / U(1) \simeq \C P^{n-1}
+	\end{equation*}
+	So there is a unique symplectic form $\omega_{FS}$ on $\C P^{n-1}$ s.t. $\pi^*\omega_{FS} = \tilde{i}^* \omega$, which is called the Fubini-Study form.
+
+	And since for any $g \in G = U(n)$ and $z \in \tilde{\mu}^{-1}(-1^*)$
+	\begin{equation*}
+		H(g \cdot z,g \cdot z) = H(z,z) = 2
+	\end{equation*}
+	$\tilde{\mu}^{-1}(-1^*)$ is $G$-invariant. And clearly the action of $\tilde{H} = U(1)$ and the action of $U(n)$ on $M$ are commutative. Therefore, the action of $U(n)$ on $\C P^{n-1}$ is Hamiltonian with the moment map $\mu^{\prime}  \colon \C P^{n-1} \sto \alg{u}(n)^*$ defined as
+	\begin{equation*}
+		\inn{\mu^{\prime}([z]),X} = \inn{\mu(z),X} = \frac{iH(Xz,z)}{2}
+	\end{equation*}
+	for $[z] \in \C P^{n-1}$ i.e. $H(z,z) = 2$. Therefore,
+	\begin{equation*}
+		\inn{\mu^{\prime}([z]),X} = \frac{iH(Xz,z)}{H(z,z)},~\forall~ z \in \C^n \backslash \bb{0}
+	\end{equation*}
+	\begin{rem}
+		Let $V$ be an $n$-dimensional complex vector space and $K$ be a compact Lie group such that $K$ acts $V$ linearly, i.e. there are a Lie group homomorphism and a Lie algebra homomorphism
+		\begin{equation*}
+			\Pi \colon K \longrightarrow GL(V),~\pi = T_e\Pi \colon  \alg{k} \longrightarrow End(V)
+		\end{equation*}
+		After equipping $V$ with a $K$-invariant inner product $H$, 
+		\begin{equation*}
+			\Pi(K) \subset U(n),~ \pi(\alg{k}) \subset \alg{u}(n)
+		\end{equation*}
+		By above, with the symplectic form $\omega = -\Img H$, the action of $K$ on $V$ is Hamiltonian. Similarly, considering the symplectic reduction of $U(1)$ at $-1^*$, the projective space $\field{P}(V)$ is a symplectic manifold with the Fubini-Study form  $\omega_{FS}$. And the induced action of $K$ on $\field{P}(V)$ is Hamiltonian with the moment map $\mu \colon \field{P}(V) \sto \alg{k}^*$,
+		\begin{equation*}
+			\inn{\mu([v]),X} = \frac{iH(\pi(X)v,v)}{H(v,v)},~\forall~v \in V \backslash \bb{0},~X\in \alg{k}
+		\end{equation*}
+		In fact, $\mu$ can be also viewed as on $V \backslash \bb{0}$ for some cases.
+	\end{rem}
+
+	\subsection{Convexity Theorems}
+
+	Considering commutative Hamiltonian actions i.e. the Lie group is commutative, the image of the moment map is a convex polytope.
+	\begin{thm}[Atiyah-Guillemin-Sternberg]
+		Let $(M,\omega)$ be a connected and compact symplectic manifold and $T$ be a commutative compact Lie group. Assume the action of $T$ on $M$ is Hamiltonian with the moment map $\mu \colon M \sto \alg{t}^*$. Let fixed point set
+		\begin{equation*}
+			M^T = \bb{m \in M \colon t \cdot m = m,~\forall~t \in T}
+		\end{equation*}
+		Then $\mu(M^T)$ is a finite set in $\alg{t}^*$ and
+		\begin{equation*}
+			\mu(M) = \cov \mu(M^T)
+		\end{equation*}
+	\end{thm}
+	\begin{rem}
+		There is a variant version of the above theorem. Let $T$ be a compact commutative and $(M,J,\omega)$ be a compact K\"ahler manifold such that $T$ act $M$ is Hamiltonianian and $J$-invariant. Let $T_{\C}$ be the complexification of $T$. Then
+		\begin{equation*}
+			\mu\bc{\clo{T_{\C} \cdot v}} = \cov \bb{\clo{T_{\C} \cdot v} \cap M^{T_{\C}}},~\forall~ v \in M
+		\end{equation*}
+	\end{rem}
+
+	\begin{exam}
+		Let $T = (S^1)^n$ act on $\C P^{n-1}$ naturally i.e
+		\begin{equation*}
+			(e^{i\theta_1},\cdots,e^{i\theta_n}) \sim \bc{
+				\begin{array}{ccc}
+					e^{i\theta_1} & & \\
+					&\ddots & \\
+					&&e^{i\theta_n}
+				\end{array}
+			} \in U(n)
+		\end{equation*}
+		This action is Hamiltonian with the moment map $\mu$ as above example. $T$ is a compact connected Lie group and $\C P^{n-1}$ is connected and compact. Therefore, $\mu(\C P^{n-1})$ is convex. Or more explicilty, for $X = (i\theta_1,\cdots,i\theta_n) \in \alg{t}$ and $z = (z_1,\cdots,z_n) \in \C^n \backslash \bb{0}$,
+		\begin{equation*}
+		 	\begin{split}
+		 		\inn{\mu([z]),X} &= \frac{i\inn{Xz,z}}{\abs{z}^2} \\
+		 		&= -\frac{1}{\abs{z}^2}\sum_{j=1}^n \theta_j\abs{z_j}^2
+		 	\end{split}
+		\end{equation*}
+		Therefore, by equipping $U(n)$ with the trace inner product,
+		\begin{equation*}
+			\mu([z]) = \frac{i}{\abs{z}^2}\bc{\abs{z_1}^2,\cdots,\abs{z_n}^2} \in \alg{t}^*
+		\end{equation*}
+		If viewing $\alg{t}^* \simeq \R^n$, then
+		\begin{equation*}
+			\mu\bc{\C P^{n-1}} = \bb{(x_1,\cdots,x_n) \in \R^n \colon x_j \geqslant 0,~\sum_{j=1}^nx_j = 1}
+		\end{equation*}
+	\end{exam}
+
+	\begin{exam}[Horn's Theorem]
+		Let $\Herm(n)$ be the set of all $n \times n$ Hermitian matrices and $\Diag(n)$ be the set of all diagonal matrices and $HD(n) =  \Diag(n) \cap \Herm(n)$
+		\begin{center}
+			\begin{tabular}{l c c l}
+				$\pi \colon$ & $\Herm(n)$ & $\longrightarrow$ & $HD(n)   \simeq \R^n$ \\
+				~ & $[a_{ij}]$ & $\longmapsto$ & $[a_{ii}]$
+			\end{tabular}
+		\end{center}
+		Then for $D \in HD(n)$ and $M = \bb{gDg^{-1} \colon g \in U(n)}$,
+		\begin{equation*}
+			\pi(M) = \cov\bb{\sigma D \sigma^{-1}  \colon \sigma \in \mathcal{S}_n}
+		\end{equation*}
+		\begin{proof}
+			Let $G = U(n)$ then
+			\begin{equation*}
+				\Lie U(n) = \alg{u}(n) = i\Herm(n) ~\Rightarrow~ \alg{u}^*(n) \simeq \Herm(n)
+			\end{equation*}
+			Let $T = U(n) \cap \Diag(n)$ then $\alg{t} = iHD(n)$ and $\alg{t}^*(n) \simeq HD(n)$. Since the coadjoint action of $U(n)$ on $\alg{u}(n)^*$ is
+			\begin{equation*}
+				\Ad_g^*X = gXg^{-1}
+			\end{equation*}
+			after viewing $D$ as an element in $\alg{u}^*(n)$, $M = U(n) \cdot D$ is the coadjoint orbit. And the action of $U(n)$ on $M$ is Hamiltonian with the moment map $\mu$ that is the inclusion $U(n) \cdot D \hookrightarrow \Herm(n)$. Then considering the restricted action of $T$ on $M$, it is also Hamiltonian with the moment map $\tilde{\mu}$
+			\begin{center}
+				\begin{tikzcd}
+					\tilde{\mu} \colon M \arrow[r, hook,"\mu"] & \Herm(n) \arrow[r, "\pi"] & HD(n)
+				\end{tikzcd}
+			\end{center}
+			Therefore, $\tilde{\mu} = \left.\pi\right\lvert_M$. And clearly
+			\begin{equation*}
+				M^T = \bb{\sigma D \sigma^{-1}  \colon \sigma \in \mathcal{S}_n}
+			\end{equation*}
+			Thus by AGS theorem,
+			\begin{equation*}
+				\tilde{\mu}(M) = \pi(M) = \cov\bb{\sigma D \sigma^{-1}  \colon \sigma \in \mathcal{S}_n} \qedhere
+			\end{equation*}
+		\end{proof}
+	\end{exam}
+	
+	For the noncommutative case, it should consider the positive Weyl Chamber. For a compact Lie group $K$ with Lie algebra $\alg{k}$, if choosing a Cartan algebra $\alg{t}$ and a fundamental system of roots $\Delta$, the closed positive Weyl chamber is in $(i\alg{t})^*$ that does not interset the image of the moment map. Therefore, there are two methods to make them compatible. First, by defining the root space as
+	\begin{equation*}
+		\alg{k}_{\alpha} = \bc{X  \in \alg{k} \colon [H,X] = i\alpha(H)X,~\forall~H\in\alg{t}}
+	\end{equation*}
+	It is well-defined since all eigenvalues of $\ad_H$ is pure imaginary. Then the closed positive Weyl chamber denoted by $\alg{t}^*_+$ is in $\alg{k}^*$ that is compatible with the image of $\mu$. Second, by replacing $\mu$ by $i\mu$, then the image of $\mu$ is in $(i\alg{k})^*$ that is compatible with the Weyl chamber. For example, considering the moment map on $\field{P}(V)$
+	\begin{equation*}
+		\inn{\mu([v]),X} = \frac{iH(Xv,v)}{H(v,v)} = \frac{H(v,(iX)v)}{H(v,v)} \eqdef \inn{i\mu([v]),iX},~\forall~X \in \alg{k}
+	\end{equation*}
+	so if $\mu \defeq i\mu$, for all $Y \in i\alg{k}$,
+	\begin{equation*}
+		\inn{\mu([v]),Y} = \frac{H(v,Yv)}{H(v,v)}
+	\end{equation*}
+
+	\begin{thm}[Kirwan]
+		Let $(M,\omega)$ be a compact and connected symplectic manifold, $K$ be a compact Lie group. The action of $K$ on $M$ is Hamiltonian with the moment map $\mu \colon M \sto \alg{k}^*$. Let $\alg{t}^*_+$ be a closed Weyl chamber of a Cartan subalgebra of $\alg{t}$ in $\alg{k}$. Then
+		\begin{equation*}
+			\mu(M) \cap \alg{t}^*_+
+		\end{equation*}
+		is a convex polytope, called the moment polytope.
+	\end{thm}
+
+	For the projective space, there is another statement by Guillemin and Sternberg in \cite{key6}.
+
+	\begin{thm}[Guillemin-Sternberg]
+		Let $V$ be a finite-dimensional $\C$-vector space with an inner product $H$ s.t. a compact Lie group $K$ act $V$ unitarily, i.e. there is a Lie group homomorphism $\Pi \colon K \rightarrow U(V)$. And let $\pi = T_e \Pi$. 
+
+		Let $L \subset V \backslash \bb{0}$ be a complex submanifold that is invariant for the action of $K$ and $\C^*$. Let $M = L/ \C^* \subset \field{P}(V)$. Then the induced action of $K$ on $\field{P}(V)$ is Hamiltonian with the moment map $\mu  \colon M \sto \alg{k}^*$
+		\begin{equation*}
+			\inn{\mu([v]),X} = \frac{iH(\pi(X)v,v)}{H(v,v)}
+		\end{equation*}
+		Suppose $M$ is connected. Then $\mu(M) \cap \alg{t}^*_+$ is a convex polytope for a closed Weyl chamber $\alg{t}^*_+$ of a Cartan subalgebra $\alg{t}$ of $\alg{k}$.
+	\end{thm}
+	\begin{rem}
+		For a special case, let $G = K_{\C}$. Then for any $v \in V \backslash \bb{0}$, $G \cdot v$ is a complex submanifold of $V$. Therefore,
+		\begin{equation*}
+			\mathcal{P}_v = \mu(\clo{G\cdot [v]}) \cap \mathfrak{t}_{+}^*
+		\end{equation*}
+		is a convex polytope. And since $\mu([v]) = \mu(v)$, $\mathcal{P}_v = \mu(\clo{G\cdot v}) \cap \mathfrak{t}_{+}^*$
+	\end{rem}
+
+	Let $G =GL(n,\C)$ (or $SL(n,\C)$) and $K = U(n)$ (or $SL(n,\C)$), so $G = K_{\C}$. And let $U(n)$ act on some vector space linearly (may not be standard) s.t. it is Hamiltonian with moment map $\mu$ ($=i\mu$). Choosing the root system and positive Weyl chamber as the above example, then
+	\begin{equation*}
+		\mathcal{P}_v = \mu(\clo{G\cdot v}) \cap \mathfrak{t}_{+}^* = \clo{\bb{\spec\bc{\mu(w)} \colon w \in G \cdot v}}
+	\end{equation*}
+
+	\begin{exam}[Horn's Problem]
+		Let $G = GL(n,\C)^3$ act on $V = M(n,\C)^{\oplus 2}$ by
+		\begin{equation*}
+			(g_1,g_2,g_3) \cdot (X,Y) \defeq \bc{g_1Xg_3^{-1},g_2Yg_3^{-1}}
+		\end{equation*}
+		Then the induced action on the projective space is Hamiltonian with the moment map is
+		\begin{equation*}
+			\mu(X,Y) = \frac{\bc{XX^\dagger,YY^\dagger,-X^\dagger X-Y^\dagger Y}}{\norm{X}^2+\norm{Y}^2} \tag{$*$}
+		\end{equation*}
+		with respect to the trace inner product and the moment polytope is
+		\begin{equation*}
+			\mathcal{P} = \bb{\bc{\spec(A),\spec(B),\spec(-A-B)} \colon A,B \geqslant 0,~\tr(A)+\tr(B) = 1}
+		\end{equation*}
+		\begin{proof}
+			Firstly, let $U(n)$ act $M(n,\C)$ as $g \cdot A \defeq gA$. Clearly, the trace inner product is $U(n)$-invariant. Therefore, by above this action is Hamiltonian with the moment map (defined as $i\mu$)
+			\begin{equation*}
+					\inn{\mu^{\prime}(A),X} = \tr\bc{X^{\dagger}\mu^{\prime}(A)} = \frac{\inn{A,XA}}{2} = \frac{\tr(A^{\dagger}X^{\dagger}A)}{2} ~\Rightarrow~ \mu^{\prime}(A) = \frac{AA^{\dagger}}{2}
+			\end{equation*}
+			Similarly, when $U(n)$ act $M(n,\C)$ as $g \cdot A \defeq Ag^{-1}$, the moment map is
+			\begin{equation*}
+				\mu^{\prime\prime}(A) = -\frac{A^{\dagger}A}{2}
+			\end{equation*}
+			Then by applying the operations of moment maps talked in above,
+			\begin{equation*}
+				\tilde{\mu}(X,Y) = \frac{\bc{XX^\dagger,YY^\dagger,-X^\dagger X-Y^\dagger Y}}{2}
+			\end{equation*}
+			So the moment map of the induced action on the projective space is $(*)$.
+		\end{proof}
+	\end{exam}
+
+\sectionbreak
+	\section{Kempf-Ness Theorem and Stability}
+
+	In this section, $(M,J,\omega)$ denotes a compact K\"ahler manifold without boundary, such as $\field{P}(V)$ with the Fubini-Study form and the nature complex structure. $K$ is a compact Lie group acting on $M$ such that this action preserves $J$ and $\omega$, like any compact Lie group acting on $\field{P}(V)$. Moreover, let this action be Hamiltonian with the moment map $\mu$. 
+
+	Let $G = K_{\C}$ a complexified Lie group of $K$. So the action of $K$ on $M$ can be extended a holomorphic action of $G$ on $M$. And for these two actions. define
+	\begin{equation*}
+		L_m \colon \alg{k} \sto T_mM,~L_m^c \colon \alg{g} \sto T_mM
+	\end{equation*}
+	as for any $X \in \alg{k}$ and $Z = X+iY \in \alg{g}$,
+	\begin{equation*}
+		L_mX = X_M(m),~L_m^cZ = Z_M(m) = L_mX + JL_{m}Y
+	\end{equation*}
+	
+	Equipping $K$ with a bi-invariant Riemannian metric, $\alg{k} \simeq \alg{k}^*$ and so the moment map $\mu$ can be viewed as $\mu \colon M \sto \alg{k}$. Also equipping $M$ with the compatible Riemannian metric $\inn{\cdot,\cdot} = \omega(\cdot,J\cdot)$, $T^*M \simeq TM$. Then it can see for any $m \in M$ and $X \in \alg{k}$,
+	\begin{equation*}
+		L_m^* = (d\mu)_mJ,~(d\mu)_m^* = JL_m,~(d\mu)_mL_mX = -[\mu(m),X]
+	\end{equation*}
+	where the third equation is by $\inn{\mu(m),[X,Y]} = \omega(X_M(m),Y_M(m))$ that is by differentiating the equation
+	\begin{equation*}
+		\inn{\mu(m),\Ad_{-\exp(tX)}Y} = \inn{\Ad_{\exp(tX)}^*\mu(m),Y} = \inn{\mu(\exp(tX)\cdot m),Y}
+	\end{equation*}
+
+	And by above, let $G / K$ equipped with the $G$-invariant Riemannian s.t. it becomes a complete, connected, and simply connected Riemannian metric and let $\nabla$ be the Levi-Civita connection.
+
+
+	\subsection{Kempf-Ness Function}
+
+	\begin{lem}
+		Let $x_0,x_1 \in \mu^{-1}(0)$.
+		\begin{equation*}
+			x_1 \in G \cdot x_0 ~\Rightarrow~ x_1 \in K \cdot x_0
+		\end{equation*}
+		In fact, if $x_1 = \exp(iX)k \cdot x_0$, then $k \cdot x_0 = x_1$ and $X_M(x_1) = 0$.
+	\end{lem}
+	\begin{proof}
+		Assume $x_1 = \exp(iX)k \cdot x_0$. Let $x(t) = \exp(itX)k \cdot x_0$. Then 
+		\begin{equation*}
+			\begin{split}
+				&x(0) = kx_0,~x(1) = x_1 \\
+				&\dot{x}(t) = JX_M(x(t)) = JL_xX
+			\end{split}
+		\end{equation*}
+		So by above identities
+		\begin{equation*}
+			\lv{\frac{d}{dt}}\inn{\mu(x(t)),X} = \inn{(d\mu)_x\dot{x},X} = \omega(L_xX,\dot{x}) = \omega(L_xX,JL_xX) =\norm{L_xX}^2 \geqslant 0
+		\end{equation*}
+		Since $\mu(x_0)=\mu(x_1) = 0$, 
+		\begin{equation*}
+			\lv{\frac{d}{dt}}\inn{\mu(x(t)),X} = \norm{L_{x(t)}X}^2 \equiv 0~\Rightarrow~\dot{x}(t)\equiv 0
+		\end{equation*}
+		Therefore, $X_M(x_1) = L_{x_1}X = 0$ and $kx_0 = x_1$.
+	\end{proof}
+	\begin{cor}
+		Let $x \in \mu^{-1}(0)$ and $K_x^c = (K_x)_{\C}$ be the complexification of $K_x$. Then
+		\begin{equation*}
+			K_x^c  = \bb{\exp(iX)k \colon k \in K_x,~X \in \ker L_x}
+		\end{equation*}
+	\end{cor}
+
+	\begin{lem}
+		Let $x \in \mu^{-1}(0)$. The following statements are equivalent.
+		\begin{enumerate}
+			\item $(d\mu)_x \colon T_xM \sto \alg{k}$ is surjective.
+			\item $L_x \colon \alg{k} \sto T_xM$ is injective.
+			\item $L_x^c \colon \alg{g} \sto T_xM$ is injective.
+		\end{enumerate}
+	\end{lem}
+	
+	Define the moment squared function as
+	\begin{center}
+		\begin{tabular}{l c c c}
+			$f \colon$ & $M$ & $\longrightarrow$ & $\R$ \\
+			~ & $x$ & $\longmapsto$ & $\frac{1}{2}\norm{\mu(x)}^2$
+		\end{tabular}
+	\end{center}
+	For any $x\in M$ and $X \in T_x M$,
+	\begin{equation*}
+		\inn{\nabla f,X} = \inn{(d\mu)_xX,\mu(x)} = \omega\bc{L_x\mu(x),X} = \inn{JL_x\mu(x),X}
+	\end{equation*}
+	Therefore, the gradient of $f$ is $\nabla f = JL_x\mu(x)$. 
+
+	Then considering the negative gradient flow $x \colon \R \sto M$ of $f$,
+	\begin{equation*}
+		\dot{x}(t) = -JL_x\mu(x),~x(0) = x_0 \tag{$\diamondsuit$}
+	\end{equation*}
+	Moreover, if the $g \colon \R \sto G$ satifies the ODE
+	\begin{equation*}
+		g(t)^{-1}\dot{g}(t) = i\mu(x(t)),~g(0)=e
+	\end{equation*}
+	then $x(t) = g(t)^{-1}\cdot x_0$ is a solution of $\diamondsuit$. And thus $x(t) \in G \cdot x_0$. 
+
+	\begin{thm}
+		Let $x_0 \in M$ and $x \colon \R \sto M$ be a solution of $\diamondsuit$. Then
+		\begin{equation*}
+			x_{\infty}  = \lim_{t \sto \infty}x(t)
+		\end{equation*}
+		exists and $L_{x_{\infty}}\mu(x_{\infty}) = 0$ i.e. $x_{\infty}$ is a critical point of $f$. Moreover, there are positive $C,c,T,\varepsilon$ and $\frac{1}{2}<\alpha < 1$ s.t. for all $t > T$,
+		\begin{equation*}
+			\begin{split}
+				d\bc{x(t),x_{\infty}} &\leqslant \int_t^{\infty} \abs{\dot{x}(s)} ds \\
+				&\leqslant \frac{C}{1-\alpha}\bc{f(x(t))-f(x_{\infty})}^{1-\alpha} \\
+				&\leqslant \frac{c}{(t-T)^{\varepsilon}}
+			\end{split}
+		\end{equation*}
+	\end{thm}
+
+	\begin{thm}[Kempf-Ness Function]
+		Fix $x \in M$, then there is a unique smooth function $\Phi_x \colon G \sto \R$ s.t. for any $g \in G$ and $v \in T_gG$ and $k \in K$,
+		\begin{equation*}
+			(d\Phi_x)_g(v) = -\inn{\mu(g^{-1}\cdot x),\Img (T_eL_{g^{-1}}v)},~\Phi_x(k) = 0
+		\end{equation*}
+		and $\Phi_x$ is $K$-invariant.
+	\end{thm}
+	\begin{rem}
+		This $\Phi_x$ is called the lifted Kempf-Ness function. And since it is $K$-invariant, the induced function
+		\begin{equation*}
+			\Phi_x \colon G / K \sto \R
+		\end{equation*}
+		is called the Kempf-Ness function.
+	\end{rem}
+	\begin{proof}[Skech of Proof]
+		Define $v_x \in \V(G)$ and $1$-form $\alpha_x$ on $G$,
+		\begin{equation*}
+			v_x\bc{g} = -T_eL_{g}i\mu(g^{-1}\cdot x),~ \alpha_x(g)(v) = -\inn{\mu(g^{-1}\cdot x),\Img (T_eL_{g^{-1}}v)}
+		\end{equation*}
+		for any $g\in G$ and $v \in T_gG$. And it can see
+		\begin{equation*}
+			\alpha_x(g)(v) = \inn{v_x,v}
+		\end{equation*}
+		Let $\psi_x \colon G \sto G \cdot x$ by $\psi_x(g) = g^{-1} \cdot x$. Then
+		\begin{equation*}
+			T_g\psi_x(v_x(g)) = \nabla f\bc{\psi_x(g)}
+		\end{equation*}
+		There exists a $\Phi_x \colon G \sto \R$ s.t.
+		\begin{equation*}
+			d\Phi_x = \alpha_x,~\lv{\Phi_x}_K = 0
+		\end{equation*}
+		and thus $\nabla \Phi_x = v_x$ and $T_g\psi_x(\nabla \Phi_x) = \nabla f\bc{\psi_x(g)}$. Moreover, for a fixed $g \in G$, let $\lv{\Phi_x}_{Kg} \colon Kg \sto \R$. Since for any $v = T_eL_g X$ where $X \in \alg{k}$,
+		\begin{equation*}
+			\alpha_x(g)(v) = -\inn{\mu(g^{-1}\cdot x),\Img (X)} = 0~\Rightarrow~d\lv{\Phi_x}_{Kg} = 0
+		\end{equation*}
+		$\Phi_x$ is invariant on $Kg$ so $\Phi_x$ is $K$-invariant.
+	\end{proof}
+
+	\begin{thm}[Properties]
+		Let $N = G / K$ and the Kempf-Ness function $\Phi_x \colon N \sto \R$.
+		\begin{enumerate}
+			\item With the Riemannian metric defined as above on $N$, $\Phi_x$ is geodesically convex.
+			\item The critical sets of $\Phi_x$ is a closed and connected submanifold of $N$, given by
+			\begin{equation*}
+				\Crit \Phi_x = \bb{[g] \in N \colon \mu\bc{g^{-1}\cdot x}  = 0}
+			\end{equation*}
+			\item If $\Crit \Phi_x \neq \varnothing$, then $\abs{\Phi_x}$ attaches its minima and every negative gradient flow of $\Phi_x$ converges exponentially to a critical point.
+			\item Let $g \colon \R \sto G$ be a smooth curve and $\gamma = \pi \circ g \colon \R \sto N$. Then $\gamma$ is a negative gradient flow of $\Phi_x$ if and only if $g(t)$ satisfies
+			\begin{equation*}
+				\Img\bc{g^{-1}\dot{g}} = \mu\bc{g^{-1}\cdot x}
+			\end{equation*}
+			\item If $\Crit \Phi_x \neq \varnothing$ and $\bb{g_n} \subset G$ s.t. $\sup_n \Phi_x([g_n]) < \infty$, then there is a sequence $\bc{h_n}$ in the identity component of $G_x$ s.t. $\bc{h_ng_n}$ has a convergent subsequence.
+		\end{enumerate}
+	\end{thm}
+
+	\begin{exam}
+		Let $V$ be an $n$-dimensional complex vector space with an inner product s.t. the action of $K$ on $V$ is unitary and let the action of $G = K_{\C}$ on $V$ be the extension. Therefore, assume $K \subset U(n)$ and $G \subset GL(n,\C)$. As above, the induced action of $K$ on $\field{P}(V)$ is Hamiltonian with the moment map
+		\begin{equation*}
+			\inn{\mu([v]),X} = \frac{i\inn{X\cdot v, v}}{\norm{v}^2},~\forall~v\in V\backslash \bb{0},~X\in \alg{k}
+		\end{equation*}
+		also extending the action of $G$ on $\field{P}(V)$. Then the lifted Kempf-Ness function $\Phi_{[v]} \colon G \sto \R$ is
+		\begin{equation*}
+			\Phi_{[v]}\bc{g} = \frac{1}{2} \bc{\log\norm{g^{-1}\cdot v}^2-\log\norm{v}^2}
+		\end{equation*}
+		\begin{proof}
+			Clearly, $\Phi_{[v]}(k) = 0$ for all $k \in K$ and $\Phi_{[v]}$ is $K$-invariant
+			Let $g \in G$ and $X \in T_gG$. Let $\varphi(t)$ be the integral curve of $v$ starting at $g$ then
+			\begin{equation*}
+				\lv{\frac{d}{dt}}_{t=0} \varphi(t)^{-1}\varphi(t) = 0~\Rightarrow~ \lv{\frac{d}{dt}}_{t=0} \varphi(t)^{-1} = -g^{-1}Xg^{-1}
+			\end{equation*}
+			Therefore,
+			\begin{equation*}
+				\begin{split}
+					\bc{d\Phi_{[v]}}_gX &= \frac{\inn{-g^{-1}Xg^{-1}\cdot v,g^{-1} \cdot v}}{\norm{g^{-1}\cdot v}^2}\\
+					&=-\frac{\inn{i\Img\bc{g^{-1}X}g^{-1}\cdot v,g^{-1} \cdot v}}{\norm{g^{-1}\cdot v}^2}-\frac{\inn{\Rea\bc{g^{-1}X}g^{-1}\cdot v,g^{-1} \cdot v}}{\norm{g^{-1}\cdot v}^2}\\
+					&=-\frac{\inn{i\Img\bc{g^{-1}X}g^{-1}\cdot v,g^{-1} \cdot v}}{\norm{g^{-1}\cdot v}^2} \\
+					&= -\inn{\mu(g^{-1} \cdot [v]),\Img\bc{g^{-1}X}}
+				\end{split}
+			\end{equation*}
+			where the third equality is by $\bc{d\Phi_{[v]}}_gY = 0$ whenever $Y = gZ$ for some $Z \in \alg{k}$.
+		\end{proof}
+		\begin{rem}
+			For convenience, let the lifted Kemf-Ness function $F_{[v]}$ be defined as
+			\begin{equation*}
+				F_{[v]}(g) = \frac{1}{2}\log{\norm{g\cdot v}^2}
+			\end{equation*}
+			In fact, $F_{[v]}(g) = \Phi_{[v]}(g^{-1}) + c$. The properties of $\Phi_{[v]}$ are also valid for $F_{[v]}$. Moreover, it can see for $X \in i\alg{k}$,
+			\begin{equation*}
+				(dF_{[v]})_eX = \inn{\mu([v]),X}
+			\end{equation*}
+			And if let $F_{[v]}  \colon G /K \sto \R$, then the geodesic of $X$ starting at $[e]$ is $\pi(\exp(itX))$.
+			\begin{equation*}
+				\lv{\frac{d}{dt}}_{t=0}F_{[v]}\bc{\pi(\exp(itX))} =\lv{\frac{d}{dt}}_{t=0}F_{[v]}\bc{\exp(itX)} = \inn{\mu([v]),X}
+			\end{equation*}
+			If let $\mu = i\mu$ and $H=iX \in i\alg{k}$ and lifting $\mu$ from on $\field{P}(V)$ to on $V$, for $F_v(g) =\frac{1}{2} \log\norm{g \cdot v}^2$
+			\begin{equation*}
+				\lv{\frac{d}{dt}}_{t=0}F_{v}\bc{\exp(tH)} = \inn{\mu(v),H}
+			\end{equation*}
+			It is the definition of moment map used in \cite{key9}.
+		\end{rem}
+	\end{exam}
+
+	\subsection{More Properties of Moment Map}
+
+	In the next subsections, let $K \subset U(n)$ and $G=K_{\C} \subset GL(n,\C)$ be matrix groups. Let
+	\begin{equation*}
+		\fml{T}^c \defeq \bb{\zeta \in \alg{g} \backslash \bb{0} \colon ~\exists~ g \in G,~g\zeta g^{-1} \in \alg{k}}
+	\end{equation*}
+	Then the \emph{$\mu$-weight} of $(x,\zeta) \in M \times \fml{T}^c$ is 
+	\begin{equation*}
+		w_{\mu}(x,\zeta) \defeq \lim_{t \sto \infty} \inn{\mu(\exp(it\zeta) \cdot x),\Rea(\zeta)}
+	\end{equation*}
+	\begin{rem}
+		The existence of $w$ is because for any $x \in M$ and $\zeta \in \fml{T}^c$,
+		\begin{equation*}
+			x^{\pm} = \lim_{t \sto \pm \infty} \exp(it\zeta)\cdot x
+		\end{equation*}
+		exist by the Morse theory. Moreover, $\zeta_M(x^{\pm}) = 0$. In particular, if $\zeta = X \in \alg{k}$, then
+		\begin{equation*}
+			w_{\mu}(x,X) = \lim_{t \sto \infty} \frac{\Phi_x(\exp(-itX))}{t}
+		\end{equation*}
+		where $\Phi_x$ is the lifted Kempf-Ness function.
+	\end{rem}
+
+	By applying the properties of $\mu$-weight, it can prove many important results related to the moment map.
+
+	\begin{thm}
+		Let $x \in M$ and $\zeta = X+iY \in \fml{T}^c$ s.t. $\zeta_M(x) = 0$. Then $\inn{\mu(x),Y} = 0$, $\norm{X} > \norm{Y}$ and
+		\begin{equation*}
+			\frac{\inn{\mu(x),X}^2}{\norm{X}^2-\norm{Y}^2} \leqslant \norm{\mu(g \cdot x)}^2,~\forall~g \in G
+		\end{equation*}
+	\end{thm}
+	\begin{rem}
+		More generally, for any $x\in M$ and $X \in \alg{g} \backslash \bb{0}$ and $g \in G$,
+		\begin{equation*}
+			\frac{-w_{\mu}(x,X)}{\norm{X}} \leqslant \norm{\mu(g \cdot x)}
+		\end{equation*}
+	\end{rem}
+	\begin{cor}
+		Let $x_0 \in M$ be a critical point of the moment squared funcion $f$ i.e. $L_{x_0}\mu(x_0) = 0$. Then
+		\begin{equation*}
+			\norm{\mu(x_0)} \leqslant \norm{\mu(g \cdot x_0)},~\forall~ g \in G
+		\end{equation*}
+	\end{cor}
+
+	In the above mention, if $x_0,x_1 \in \mu^{-1}(0)$, then $x_1 \in G \cdot x_0$ implies $x_1 \in K \cdot x_0$. This statement can be more general.
+	\begin{thm}
+		Let $x_0$ and $x_1$ be critical points of the moment squared function $f$. Then
+		\begin{equation*}
+			x_1 \in G \cdot x_0 ~\Rightarrow~ x_1 \in K \cdot x_0
+		\end{equation*}
+	\end{thm}
+
+	\begin{thm}
+		Let $x_0 \in M$ and $x \colon \R \sto M$ be the solution of $\diamondsuit$ with $x_{\infty} = \lim_{t \sto \infty}x(t)$. Then
+		\begin{equation*}
+		 	\norm{\mu(x_{\infty})} = \inf_{g \in G} \norm{\mu(g \cdot x_0)}
+		\end{equation*}
+	\end{thm}
+	\begin{rem}
+		Note that $x_{\infty}$ is a critical point of the moment squared function and $x_{\infty} \in \clo{G \cdot x_0}$. And the $G$-orbit of $x_0$ determines the $G$-orbit of $x_{\infty}$ that is, in fact, the $K$-orbit of $x_{\infty}$.
+	\end{rem}
+
+	More generally, the infimum points are in the same $K$-orbit.
+	\begin{thm}
+		Let $x_0 \in M$ and $m = \inf_{g \in G} \norm{\mu(g \cdot x_0}$. Then
+		\begin{equation*}
+			x,y \in  \clo{G \cdot x_0} \text{ s.t. } \mu(x)=\mu(y) =m ~\Rightarrow~ y = K \cdot x
+		\end{equation*}
+	\end{thm}
+	\begin{rem}
+		It shows that for any $x \in G \cdot x_0$ s.t. $\norm{\mu{x}} = m$, $x$ is a critical point of the moment squared function $f$ and is a limit point of the negative gradient flow of $f$ starting at some point in $G \cdot x_0$.
+	\end{rem}
+
+	The infimum of the norm of moment map along the $G$-orbits can be characterized. For $x \in \Crit(f)$, let
+	\begin{equation*}
+		W^s(K \cdot x) = \bb{y_0 \in M \colon y(t) \text{ of }\diamondsuit\text{ starting at }y_0 \text{ s.t. } \lim_{t \sto \infty}y(t) \in K \cdot x}
+	\end{equation*}
+	\begin{cor} 
+		The following statements holds.
+		\begin{enumerate}
+			\item $M = \bigcup_{x \in \Crit(f)}W^s(K \cdot x)$.
+			\item For $x \in \Crit(f)$ and $y_0 \in M$,
+			\begin{equation*}
+				y_0 \in W^s(K \cdot x) ~\Leftrightarrow~ x \in\clo{G\cdot y_0},~\norm{\mu(x)} = \inf_{g \in G}\norm{\mu(g \cdot y_0)}
+			\end{equation*}
+			\item For any $x \in \Crit(f)$, $W^s(K \cdot x)$ is the union of $G$-orbits.
+		\end{enumerate}
+	\end{cor}
+
+	
+	\subsection{Stability}
+
+	\begin{defn}
+		An element $x \in M$ is called
+		\begin{enumerate}
+			\item $\mu$-unstable if $\clo{G \cdot x} \cap \mu^{-1}(0) = \varnothing$.
+			\item $\mu$-semistable if $\clo{G \cdot x} \cap \mu^{-1}(0) \neq \varnothing$.
+			\item $\mu$-polystable if ${G \cdot x} \cap \mu^{-1}(0) \neq \varnothing$.
+			\item $\mu$-stable if ${G \cdot x} \cap \mu^{-1}(0) \neq \varnothing$ and $G_x$ is discrete.
+		\end{enumerate}
+		And let $M^{us},M^{ss},M^{ps}$ and $M^{s}$ be the corresponding sets.
+	\end{defn}
+
+	Firstly, these points can be characterized by using the negative gradient flow of moment squared map.
+
+	\begin{thm}
+		Let $x_0 \in M$ and $x(t)$ be the solution of $\diamondsuit$ and $x_{\infty} = \lim_{t \sto \infty}x(t)$.
+		\begin{enumerate}
+			\item $x_0 \in M^{ss}$ if and only if $\mu(x_{\infty}) = 0$.
+			\item $x_0 \in M^{ps}$ if and only if $\mu(x_{\infty}) = 0$ and $x_{\infty} \in G\cdot x_0$.
+			\item $x_0 \in M^{s}$ if and only if $G_{x_{\infty}}$ is discrete.
+		\end{enumerate}
+		And $M^{ss}$ and $M^{s}$ are open in $M$.
+	\end{thm}
+
+	Also, the Kempf-Ness function can be applied to characterize the stability.
+	\begin{thm}
+		Let $x \in M$ and $\Phi_x$ be the Kempf-Ness function.
+		\begin{enumerate}
+			\item $x \in M^{ss}$ if and only if $\Phi_x$ is bounded below.
+			\item $x \in M^{ps}$ if and only if $\Phi_x$ has a critical point.
+			\item $x \in M^{s}$ if and only if $\Phi_x$ is bounded below and proper.
+		\end{enumerate}
+	\end{thm}
+
+	Now considering a special case related to the geometric invariant theory, let $G = K_{\C} \subset GL(n,\C)$ act a complex vector space $V$ with a $K$-invariant inner product. Also, let the induced action of $K$ and $G$ act on $\field{P}(V)$ with the moment map $\mu$ as in above mention. 
+
+	\begin{defn}
+		Let $v \in V \backslash \bb{0}$.
+		\begin{enumerate}
+			\item $v$ is called unstable if $0 \in \clo{G \cdot v}$.
+			\item $v$ is called semistable if $0 \notin \clo{G \cdot v}$.
+			\item $v$ is called polystable if $G \cdot v = \clo{G \cdot v}$.
+			\item $v$ is called stable if $G \cdot v = \clo{G \cdot v}$ and $G_v$ is discrete.
+		\end{enumerate}
+	\end{defn}
+
+	\begin{thm}[Kempf-Ness]
+		Let $x = [v] \in \field{P}(V)$. Considering $G$ acting on $V$ and the Hamiltonian action of $K$ on $\field{P}(V)$ and the induced action of $G$ on $\field{P}(V)$, then
+		\begin{enumerate}
+			\item $v$ is unstable if and only if $x = [v]$ is $\mu$-unstable.
+			\item $v$ is semistable if and only if $x=[v]$ is $\mu$-semistable.
+			\item $v$ is polystable if and only if $x=[v]$ is $\mu$-polystable.
+			\item $v$ is stable if and only if $x=[v]$ is $\mu$-stable.
+		\end{enumerate}
+	\end{thm}
+	\begin{rem}
+		Therefore, by applying the above results
+		\begin{equation*}
+			0 \notin \clo{G \cdot v} ~\Leftrightarrow~ 0 \notin \clo{G \cdot x} ~\Leftrightarrow~\mu(x_{\infty}) = 0 ~\Leftrightarrow~ \Phi_{x} \text{ bounded below} 
+		\end{equation*}
+	\end{rem}
+	
+	\sectionbreak
+	\section{Scaling Problem and Examples}
+
+	\subsection{Invariant Theory}
+
+	Let $G=K_{\C}$ be a reductive Lie group acting on an $n$-dimensional complex space $V$ with a $K$-invariant inner product, and thus assume $K \subset U(n)$ and $G \subset GL(n,\C)$.
+	
+	The invariant theory is to consider the induced action of $G$ on the polynomial ring $\C[x_1,\cdots,x_n]$. Let $\bc{x_1,\cdots,x_n}$ be the coordinate of $V$ and denote the polynomial ring by $\C[V]$. The action of $G$ on $\C[V]$ is defined as
+	\begin{equation*}
+		g \cdot f(x_1,\cdots,x_n) \mapsto h(x_1,\cdots,x_n) \defeq f\bc{g^{-1} \cdot (x_1,\cdots,x_n)} 
+	\end{equation*}
+	Then the invariant polynomial ring is
+	\begin{equation*}
+		\C[V]^G = \bb{f \in \C[V] \colon g \cdot f = f,~\forall~g \in G}
+	\end{equation*}
+	that is a subalgebra of $\C[V]$. Moreover, by Hilbert, $\C[V]^G$ is a finitely generated subalgebra i.e. there are polynomials $f_1,\cdots,f_l \in \C[V]$ s.t.
+	\begin{equation*}
+		\C[V]^G = \C[f_1,\cdots,f_l] \defeq \bb{p\bc{f_1,\cdots,f_l} \colon p \in \C[y_1,\cdots,y_l]}
+	\end{equation*}
+	The invariant polynomials can be used to separate the orbit closure of action fo $G$ on $V$. In fact, for any $v,w \in V$,
+	\begin{equation*}
+		\clo{G \cdot v} \cap \clo{G \cdot w} \neq \varnothing ~\Leftrightarrow~ f(v) = f(w)~\forall~f \in \C[V]^G
+	\end{equation*}
+	Let the set, called null cone, be defined as
+	\begin{equation*}
+		\mathcal{N} \defeq \bb{v \in V \colon 0 \in \clo{G \cdot v}}
+	\end{equation*}
+	i.e. the set of all unstable points. By above,
+	\begin{equation*}
+		\mathcal{N} = \bb{v \in V \colon f(v) = 0,~\forall~f \in \C[V]^G}  = \bb{v \in V \colon f_1(v)=\cdots=f_l(v) = 0}
+	\end{equation*}
+
+	\begin{thm}[Hilbert-Mumford Criterion]
+		For any $v \in V$,
+		\begin{equation*}
+			v \in \mathcal{N} ~\Leftrightarrow~ \exists~\lambda \colon \C^{*} \sto G \text{ algebriac homomorphism s.t. } \lim_{t \sto \infty}\lambda(t) \cdot v =0
+		\end{equation*}
+	\end{thm}
+	\begin{rem}
+		This $\lambda$ is called a one-parameter subgroup (PSG). For some special cases, the $1$-PSG is explicit.
+		\begin{enumerate}
+			\item If $G = (\C^*)^n$, any $1$-PSG has the form
+			\begin{equation*}
+				\lambda(t) = \bc{t^{\alpha_1},\cdots,t^{\alpha_n}}
+			\end{equation*}
+			for some ${\alpha_1},\cdots,{\alpha_n} \in \Z$.
+			\item If $G = GL(n,\C)$ or some matrix Lie group, any $1$-PSG has the form
+			\begin{equation*}
+				\lambda(t) = S\diag\bc{t^{\alpha_1},\cdots,t^{\alpha_n}}S^{-1}
+			\end{equation*}
+			for some ${\alpha_1},\cdots,{\alpha_n} \in \Z$ and $S \in GL(n,\C)$.
+		\end{enumerate}
+	\end{rem}
+
+	\begin{exam}
+		Let $G=\mathcal{S}_n$ be the symmetry group acting on $V$. Then
+		\begin{equation*}
+			\C[V]^{\mathcal{S}_n} = \C[e_1,\cdots,e_n]
+		\end{equation*}
+		where $e_k$ is called $k$-th elementary symmetric polynomials given by
+		\begin{equation*}
+			e_k(x_1,\cdots,x_n) = \sum_{1\leqslant i_1 < \cdots i_k \leqslant n}x_{i_1}\cdots x_{i_k}
+		\end{equation*}
+		the $\mathcal{N} = \bb{0}$.
+	\end{exam}
+
+	\begin{exam}
+		Let $G=GL(n,\C)$ act on $V = M(n,\C)$ by conjugtion, $g \cdot A = gAg^{-1}$. Considering the $1$-PSG
+		\begin{equation*}
+			\lambda(t) = \left(
+			    \begin{array}{ccc}
+			      t^{\alpha_1} & & \\
+			      & \ddots &\\
+			      &&t^{\alpha_n}
+			    \end{array}
+			  \right)
+		\end{equation*}
+		with integers $\alpha_1 \geqslant \cdots \geqslant \alpha_n$. In fact, any $1$-PSG is conjugate to this form. Then for any $A=[a_{kj}] \in V$,
+		\begin{equation*}
+			\lambda(t) \cdot A = \lambda(t)A\lambda(t)^{-1} = \bj{t^{\alpha_k-\alpha_j}a_{kj}}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\lim_{t \sto \infty} \lambda(t) \cdot A = 0~\Leftrightarrow~A \text{ is strictly upper triangular}
+		\end{equation*}
+		Then by Hilbert-Mumford criterion,
+		\begin{center}
+			$A \in \mathcal{N}$ $\Leftrightarrow$ $A$ is conjugate to a strictly upper triangular. $\Leftrightarrow$ $A$ is nilpotent.
+		\end{center}
+		Let $X=[x_{ij}]$. Then $X$ is nilpotent if and only if
+		\begin{equation*}
+			\det\bc{tI-X} = t^n - f_1(\mathbf{x})t^{n-1}+\cdots+(-1)^nf_n(\mathbf{x}) = t^n
+		\end{equation*}
+		where $\mathbf{x} = (x_{11},\cdots,x_{nn})$. This equivalent to $f_1(\mathbf{x})=\cdots=f_n(\mathbf{x}) =0$. Therefore,
+		\begin{equation*}
+			\C[V]^G = \C[f_1,\cdots,f_n]
+		\end{equation*}
+	\end{exam}
+
+	\begin{exam}
+		Let $G = SL(n,\C) \times SL(n,\C)$ act on $V = M(n,\C)$ by 
+		\begin{equation*}
+			(A,B) \cdot H \defeq AHB
+		\end{equation*}
+		Firstly, if $H \in \mathcal{N}$, then there are $\bb{A_k}$ and $\bb{B_k}$ in $SL(n,\C)$ s.t. $A_kHB_k \sto 0$. By the continuity of $\det$,
+		\begin{equation*}
+			\det(A_kHB_k) = \det(A_k)\det(H)\det(B_k) = \det H \sto 0
+		\end{equation*}
+		So $\det H = 0$ and $H$ is singular. Conversely, if $H$ is singular, then there is a $S \in GL(n,\C)$ s.t. the last row of $S^{-1}H$ is $0$. So if let the $1$-PSG
+		\begin{equation*}
+			\lambda(t) = \bc{S\diag\bc{t,\cdots,t,t^{-n-1}}S^{-1},I}
+		\end{equation*}
+		then $\lambda(t) \cdot H \sto 0$. By Hilbert-Mumford criterion, $H \in \mathcal{N}$. Therefore, $H \in \mathcal{N}$ if and only if $H$ is singular. And the invariant polynomial ring is
+		\begin{equation*}
+			\C[V]^G = \inn{\det X}
+		\end{equation*}
+		where $X=[x_{ij}]$ are variables.
+	\end{exam}
+
+	The \emph{null cone problem} is given $v \in V$, determine if $0 \in \mathcal{N}$ or if $v$ is unstable for the action of $G$ on $V$. The dual problem is that given $v \in V$, determine if $v$ is semistable. Then by Kempf-Ness theorem, when considering the Hamiltonian action of $K$ on $\field{P}(V)$ with the moment map $\mu$ and the induced action of $G$ on $\field{P}(V)$ , it is equivalent to determine if $v$ is $\mu$-semistable, i.e if
+	\begin{equation*}
+		\exists~ [w] \in \clo{G \cdot [v]} \text{ s.t. } \mu([w]) = 0
+	\end{equation*}
+	or simply, if there is a $w \in \clo{G \cdot v}$ s.t. $\mu(w) = 0$. It is called the \emph{scaling problem}.
+
+	\subsection{Matrix Scaling}
+
+	Let $G = ST(n) \times ST(n)$ act on $V = M(n,\C)$ by the left-right action i.e.
+	\begin{equation*}
+		(A,B) \cdot H = AHB
+	\end{equation*}
+	where 
+	\begin{equation*}
+		ST(n) = \bb{\left(
+			    \begin{array}{ccc}
+			      z_1 & & \\
+			      & \ddots &\\
+			      &&z_n
+			    \end{array}
+			  \right) \colon z_1,\cdots,z_n \in \C^*,~\prod_{j=1}^n z_j = 1}
+	\end{equation*}
+
+	\begin{enumerate}
+		\item \textbf{Invarian Theory:} Any $1$-PSG $\lambda \colon \C^* \sto G$ has the form
+		\begin{equation*}
+			\lambda(t) = \bc{\diag\bc{t^{\alpha_1},\cdots,t^{\alpha_n}},\diag\bc{t^{\beta_1},\cdots,t^{\beta_n}}}
+		\end{equation*}
+		where $\alpha_j,\beta_j \in \Z$ for any $j$ and
+		\begin{equation*}
+			\sum_{j=1}^n \alpha_j = \sum_{j=1}^n \beta_j = 0
+		\end{equation*}
+		For any $H =[h_{kj}]$, 
+		\begin{equation*}
+			\lambda(t) \cdot H = \bj{t^{\alpha_k+\beta_j}h_{kj}}
+		\end{equation*}
+		Therefore, by Hilbert-Mumford criterion,
+		\begin{equation*}
+			\begin{split}
+				H \in \mathcal{N}~\Leftrightarrow~&\exists~\alpha_1,\cdots,\alpha_n,\beta_1,\cdots,\beta_n \in \Z \\
+				& \sum_{j=1}^n \alpha_j = \sum_{j=1}^n \beta_j = 0 \\
+				& \text{ s.t. }\alpha_k+\beta_j > 0,~\forall~ (k,j) \in \supp H\\
+				\Leftrightarrow~& \supp H\text{ has no perfect matching}
+			\end{split}
+		\end{equation*}
+		where the bipartite graph $\supp H = \bb{(k,j) \in [n]\times[n] \colon h_{kj} \neq 0}$. And thus
+		\begin{equation*}
+			\C[V]^G = \inn{x_{1\sigma(1)}\cdots x_{n\sigma(n)} \colon \sigma \in \mathcal{S}_n}
+		\end{equation*}
+		where $X=[x_{ij}]$ are variables.
+
+		\item \textbf{Geometric Invariant Theory:} $ST(n)$ is a commutative Lie group with Lie algebra $\alg{st}(n)$, where
+		\begin{equation*}
+			\alg{st}(n) = \bb{\left(
+				    \begin{array}{ccc}
+				      z_1 & & \\
+				      & \ddots &\\
+				      &&z_n
+				    \end{array}
+				  \right) \colon z_1,\cdots,z_n \in \C,~\sum_{j=1}^n z_j = 0}
+		\end{equation*}
+		and let
+		\begin{equation*}
+			\alg{t} =\bb{\left(
+				    \begin{array}{ccc}
+				      i\theta_1 & & \\
+				      & \ddots &\\
+				      &&i\theta_n
+				    \end{array}
+				  \right) \colon \theta_1,\cdots,\theta_n \in \R,~\sum_{j=1}^n \theta_j = 0}
+		\end{equation*}
+		It can see $\alg{st}(n) = \alg{t}_{\C}$. Moreover, if let
+		\begin{equation*}
+			T(n) = \bb{\left(
+				    \begin{array}{ccc}
+				      e^{i\theta_1} & & \\
+				      & \ddots &\\
+				      &&e^{i\theta_n}
+				    \end{array}
+				  \right) \colon \theta_1,\cdots,\theta_n \in \R,~\sum_{j=1}^n \theta_j = 0}
+		\end{equation*}
+		then $\Lie T(n) = \alg{t}$ and $T(n)$ is a compact Lie group. Therefore, $ST(n) = T(n)_{\C}$ is a reductive Lie group. And if let $K = T(n) \times T(n)$ be the compact Lie group with the Lie algebra $\alg{k} = \alg{t} \times \alg{t}$, then $G =K_{\C}$ is a reductive Lie group with Lie algebra $\alg{st}(n) \times \alg{st}(n)$. Moreover, the trace inner product on $\alg{t}$ is a bi-invariant Riemannian metric so it is also valid on $\alg{t} \times \alg{t}$.
+
+		Equipping $V=M(n,\C)$ with the trace inner product, it is clear that the action of $K$ on $V$ is invriant for this inner product. And thus the action of $K$ on $V$ is Hamiltonian with the moment map $\hat{\mu} \colon V \sto (\alg{t} \times \alg{t})^*$. Firstly, considering the action of $T(n)$ on $M(n,\C)$ by $A \cdot Z = AZ$ with the moment map $\tilde{\mu}_r$, since $T(n) \subset U(n)$ and the moment map of $U(n)$ on $M(n,\C)$ is 
+		\begin{equation*}
+			\tilde{\mu}_r^{\prime}(A) = \frac{iAA^{\dagger}}{2}~\Rightarrow~ \tilde{\mu}_r(A) = \lv{\tilde{\mu}_r^{\prime}(A)}_{\alg{t}} = \frac{i}{2} \diag\bc{r_1(A),\cdots,r_n(A)}
+		\end{equation*}
+		where $r_k(A) = \sum_{j=1}^n\abs{a_{kj}}^2$. Similarly, for $T(n)$ acting on $M(n,\C)$ by $A \cdot Z = ZA$ with the moment map \begin{equation*}
+			\tilde{\mu}_l(A) = \frac{i}{2} \diag\bc{l_1(A),\cdots,l_n(A)}
+		\end{equation*}
+		where $l_j(A) = \sum_{k=1}^n\abs{a_{kj}}^2$. Therefore, 
+		\begin{equation*}
+			\hat{\mu}(A) = \frac{i}{2}\bc{\mathbf{r}_A,\mathbf{l}_A}
+		\end{equation*}
+		where $\mathbf{r}_A = \diag\bc{r_1(A),\cdots,r_n(A)}$ and $\mathbf{l}_A = \diag\bc{l_1(A),\cdots,l_n(A)}$. Then the moment map $\mu$ of the induced action of $K$ on $\field{P}(V)$ is
+		\begin{equation*}
+			\mu(A) = \frac{i}{\norm{A}^2}\bc{\mathbf{r}_A,\mathbf{l}_A}
+		\end{equation*}
+		Clearly $\norm{A}^2 =\sum_k r_k(A) = \sum_j l_j(A)$, so the image of $\mu$ is a convex polytope in $\alg{k}^*$. If viewing $\mu \in (i\alg{k})^* \simeq i \alg{k}$, then
+		\begin{equation*}
+			\mu(A) = \frac{1}{\norm{A}^2}\bc{\mathbf{r}_A-\frac{\norm{A}^2}{n}I_n,\mathbf{l}_A-\frac{\norm{A}^2}{n}I_n}
+		\end{equation*}
+		So if $\mu(A) = 0$, then $\abs{A}^2 = \bj{\abs{a_{ij}}^2}$ is doubly stochastic-scalable.
+	\end{enumerate}
+	\begin{rem}
+		As above mention, $\mu$ also can be calculated by differentiating the Kempf-Ness function along the geodesic (in $G/K$) i.e.
+		\begin{equation*}
+			\lv{\frac{d}{dt}}_{t=0}F_A(e^{tH}) = \lv{\frac{d}{dt}}_{t=0}\log \norm{e^{tH} \cdot A} = \inn{\mu(A),H}
+		\end{equation*}
+	\end{rem}
+
+	\subsection{Operator Scaling}
+	
+	Let $G = SL(n,\C) \times SL(n,\C)$ acts $V = M(n,\C)^{\oplus m}$ by
+	\begin{equation*}
+		(A,B) \cdot (H_1,\cdots,H_m) \defeq (AH_1B,\cdots,AH_mB)
+	\end{equation*}
+	
+\begin{enumerate}
+	\item \textbf{Invarian Theory:} Any $1$-PSG $\lambda \colon \C^* \sto G$ has the form
+		\begin{equation*}
+			\lambda(t) = \bc{S^{-1}\diag\bc{t^{\alpha_1},\cdots,t^{\alpha_n}}S,T^{-1}\diag\bc{t^{\beta_1},\cdots,t^{\beta_n}}T}
+		\end{equation*}
+		where $S,T \in SL(n,\C)$ and $\alpha_j,\beta_j \in \Z$ for any $j$ s.t.
+		\begin{equation*}
+			\sum_{j=1}^n \alpha_j = \sum_{j=1}^n \beta_j = 0
+		\end{equation*}
+		Similar as matrix scaling, $(H_1,\cdots,H_m) \in \mathcal{N}$ if and only if there are \\
+		$\alpha_1,\cdots,\alpha_n,\beta_1,\cdots,\beta_n \in \Z$ with
+		\begin{equation*}
+			\sum_{j=1}^n \alpha_j = \sum_{j=1}^n \beta_j = 0
+		\end{equation*}
+		s.t. 
+		\begin{equation*}
+			\alpha_k+\beta_j > 0,~\forall~ (k,j) \in \supp(SH_1T^{-1},\cdots,SH_mT^{-1})
+		\end{equation*}
+		where 
+		\begin{equation*}
+			\supp(SH_1T^{-1},\cdots,SH_mT^{-1}) = \bigcap_{l=1}^m\supp(SH_lT^{-1})
+		\end{equation*}
+		for some basis change $S,T$. So it means there is a common Hall's block in $H_l$'s i.e. there is a subspace $U$ in $\C^n$ s.t.
+		\begin{equation*}
+			\dim H_l(U) < \dim U,~\forall~l=1,2,\cdots,m
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			H = (H_1,\cdots,H_m) \in \mathcal{N}~\Leftrightarrow~ H \text{ is rank-decreasing.}
+		\end{equation*}
+		And thus the invariant polynomial ring is
+		\begin{equation*}
+			\C[V]^G =  \inn{\sum_{l=1}^m X_l \otimes D_l \colon ~\forall~d \in \N,~D_l \in M(d,\C)}
+		\end{equation*}
+		where $X_l = [x_{l,k,j}]$ are variables.
+		\item \textbf{Geometric Invariant Theory:} By above example, $SL(n,\C) = SU(n)_{\C}$ with a maximal torus $T \subset SU(n)$ with Lie algbebra $\alg{t}$ and let the Cartan subalgebra $\alg{h} = \alg{t}_{\C}$, then
+		\begin{equation*}
+			\begin{split}
+				T &= \bb{\diag\bc{e^{i\theta_1},\cdots,e^{i\theta_n}} \colon \theta_j \in \R,~\sum_{j=1}^n \theta_j = 0}\\
+				\alg{t} &= \bb{\diag\bc{{i\theta_1},\cdots,{i\theta_n}} \colon \theta_j \in \R,~\sum_{j=1}^n \theta_j = 0}\\
+				\alg{h} &= \bb{\diag\bc{{ z_1},\cdots,{ z_n}} \colon z_j \in \C,~\sum_{j=1}^n z_j = 0}
+			\end{split}
+		\end{equation*}
+		with the root system as $R = \bb{\pm (\varepsilon_k-\varepsilon_j) \colon 1 \leqslant k < j \leqslant n}$. Then the closed Weyl chamber is
+		\begin{equation*}
+		 	\clo{C(\Delta)} = \bb{\diag\bc{{\theta_1},\cdots,{\theta_n}} \colon \theta_k \geqslant \theta_{k+1}}
+		\end{equation*}
+		if choosing the fundamental system as $\Delta = \bb{\varepsilon_k-\varepsilon_{k+1} \colon 1\leqslant k \leqslant n-1}$.
+
+		Let $K = SU(n) \times SU(n)$. Then $G = K_{\C}$. The corresponding Lie structures are just obtained by the Cartesian product. 
+
+		Clearly, the trace inner product on $V$ is $K$-invariant. So similar to the last example talked in section \textbf{3.4}, the moment map of $K$ acting on $\Pb(V)$ 
+		\begin{equation*}
+			\mu \colon V \sto (i\alg{k})^*
+		\end{equation*}
+		is, for $H = (H_1,\cdots,H_m) \in V$,
+		\begin{equation*}
+			\mu(H) = \frac{1}{\norm{H}^2}\bc{\sum_{l}H_lH_l^{\dagger},\sum_{l}H_l^{\dagger}H_l}
+		\end{equation*}
+		and the moment polytope is
+		\begin{equation*}
+			\mathcal{P} = \mu(V) \cap \clo{C(\Delta)} = \bb{\bc{\spec(A),\spec(B)} \colon A,B \geqslant 0, \tr(A) = \tr(B) = 1}
+		\end{equation*}
+		Also after viewing $(i\alg{k})^* \simeq i\alg{k}$,
+		\begin{equation*}
+			\mu(H) = \frac{1}{\norm{H}^2}\bc{\sum_{l}H_lH_l^{\dagger} - \frac{\norm{H}^2}{n}I_n,\sum_{l}H_l^{\dagger}H_l-\frac{\norm{H}^2}{n}I_n}
+		\end{equation*}
+		Therefore, $\mu(H) = 0$ means $H$ is scalable.
+\end{enumerate}
+
+
+
+\nocite{*}
+
+
+
+
+	\sectionbreak
+	\printbibliography
+\end{document}
